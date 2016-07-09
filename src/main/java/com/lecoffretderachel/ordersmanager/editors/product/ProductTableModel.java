@@ -13,17 +13,14 @@ import com.lecoffretderachel.ordersmanager.service.ProductService;
 @Component
 public class ProductTableModel extends AbstractTableModel {
 
-	@Autowired
-	ProductService productService;
-    private String[] columnNames;
-    private ArrayList data;
+	final ProductService productService;
+    String[] columnNames;
+    ArrayList data;
 
-    public ProductTableModel() {
+    @Autowired
+    public ProductTableModel(ProductService productService) {
+    	this.productService = productService;
     	columnNames = new String[] {"id", "name", "color", "fabric", "style"};
-    }
-    
-    public void fillData() {
-    	data = new ArrayList(productService.listProducts());
     }
 
     @Override
@@ -49,14 +46,36 @@ public class ProductTableModel extends AbstractTableModel {
         return value.get(col);
     }
     
+    @Override
     public boolean isCellEditable(int row, int col) {
     	return col != 0;
     }
-    
+
+    @Override
     public void setValueAt(Object value, int row, int col) {
     	Product elem = (Product) data.get(row);
         elem.set(col, value);
         productService.updateProduct(elem);
         fireTableCellUpdated(row, col);
+    }
+    
+    public void fillData() {
+    	data = new ArrayList(productService.listProducts());
+    }
+    
+    public void addEmptyRow() {
+    	int index = data.size();
+    	Product newEntry = new Product();
+    	newEntry.setName("newName");
+    	productService.persistProduct(newEntry);
+    	data.add(newEntry);
+    	fireTableRowsInserted(index, index);
+    }
+    
+    public void deleteSelectedRow(int atIndex) {
+    	Product elem = (Product) data.get(atIndex);
+    	productService.deleteProduct(elem);
+    	data.remove(atIndex);
+    	fireTableRowsDeleted(atIndex, atIndex);
     }
 }
