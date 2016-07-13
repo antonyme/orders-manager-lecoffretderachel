@@ -17,26 +17,26 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Transactional
 	public void persistProduct(Product product) {
-		productDAO.persistProduct(product);
+		productDAO.persist(product);
 	}
 
 	@Transactional
 	public List listProducts() {
-		return productDAO.listProducts();
+		return productDAO.listAll();
 	}
 
 	@Transactional
 	public void updateProduct(Product product) {
-		productDAO.updateProduct(product);
+		productDAO.update(product);
 	}
 	
 	@Transactional
 	public Product findProductById(Integer id) {
-		return productDAO.findProductById(id);
+		return productDAO.findById(id);
 	}
 
 	@Transactional
 	public void deleteProduct(Product product) {
-		productDAO.deleteProduct(product);
+		productDAO.delete(product);
 	}
 }

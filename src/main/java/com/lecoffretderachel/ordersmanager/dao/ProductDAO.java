@@ -5,9 +5,9 @@ import java.util.List;
 import com.lecoffretderachel.ordersmanager.model.Product;
 
 public interface ProductDAO {
-	void persistProduct(Product product);
-	Product findProductById(Integer id);
-	List listProducts();
-	void updateProduct(Product product);
-	void deleteProduct(Product product);
+	void persist(Product product);
+	Product findById(Integer id);
+	List listAll();
+	void update(Product product);
+	void delete(Product product);
 }

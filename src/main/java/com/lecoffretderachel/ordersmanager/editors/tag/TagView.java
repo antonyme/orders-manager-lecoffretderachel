@@ -1,4 +1,4 @@
-package com.lecoffretderachel.ordersmanager.editors.product;
+package com.lecoffretderachel.ordersmanager.editors.tag;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -10,18 +10,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductView {
+public class TagView {
 	JFrame frame;
 	JTable table;
 	JButton btnAddEntry;
 	JButton btnDeleteEntry;
 	
-	public ProductView() {
+	public TagView() {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createGUI();
@@ -62,10 +61,6 @@ public class ProductView {
 	
 	public void injectModelIntoTable(AbstractTableModel model) {
 		table.setModel(model);
-	}
-	
-	public void addTagEditor(TableCellEditor cellEditor) {
-		table.getColumnModel().getColumn(2).setCellEditor(cellEditor);;
 	}
 	
 	public void addBtnAddEntryListener(ActionListener listener) {

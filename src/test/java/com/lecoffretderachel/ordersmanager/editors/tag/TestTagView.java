@@ -1,16 +1,16 @@
-package com.lecoffretderachel.ordersmanager.editors.product;
+package com.lecoffretderachel.ordersmanager.editors.tag;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.Lifecycle;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class TestProductView implements Lifecycle {
+public class TestTagView implements Lifecycle {
 	private static ConfigurableApplicationContext context;
 	
 	public static void main(String[] args) {
 		context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		context.registerShutdownHook();
-		context.getBean(ProductController.class).show();
+		context.getBean(TagController.class).show();
 	}
 
 	public boolean isRunning() {

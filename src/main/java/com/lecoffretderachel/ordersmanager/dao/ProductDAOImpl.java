@@ -10,28 +10,26 @@ import com.lecoffretderachel.ordersmanager.model.Product;
 
 @Repository("productDAO")
 public class ProductDAOImpl implements ProductDAO {
-
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public void persistProduct(Product product) {
+	public void persist(Product product) {
 		sessionFactory.getCurrentSession().persist(product);
 	}
 
-	public List listProducts() {
+	public List listAll() {
 		return sessionFactory.getCurrentSession().createQuery("from Product").list();
-		//(List) sessionFactory.getCurrentSession().createCriteria(getClass()).list();
 	}
 
-	public Product findProductById(Integer id) {
+	public Product findById(Integer id) {
 		return (Product) sessionFactory.getCurrentSession().get(Product.class, id);
 	}
 
-	public void updateProduct(Product product) {
+	public void update(Product product) {
 		sessionFactory.getCurrentSession().update(product);
 	}
 	
-	public void deleteProduct(Product product) {
+	public void delete(Product product) {
 		sessionFactory.getCurrentSession().delete(product);
 	}
 }

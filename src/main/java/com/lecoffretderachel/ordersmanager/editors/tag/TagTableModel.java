@@ -1,35 +1,30 @@
-package com.lecoffretderachel.ordersmanager.editors.product;
+package com.lecoffretderachel.ordersmanager.editors.tag;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.lecoffretderachel.ordersmanager.model.Product;
-import com.lecoffretderachel.ordersmanager.service.ProductService;
+import com.lecoffretderachel.ordersmanager.model.Tag;
 import com.lecoffretderachel.ordersmanager.service.TagService;
 
 @Component
-public class ProductTableModel extends AbstractTableModel {
-
-	final ProductService productService;
+public class TagTableModel extends AbstractTableModel {
 	final TagService tagService;
     String[] columnNames;
     ArrayList data;
 
     @Autowired
-    public ProductTableModel(ProductService productService, TagService tagService) {
-    	this.productService = productService;
+    public TagTableModel(TagService tagService) {
     	this.tagService = tagService;
-    	columnNames = new String[] {"id", "name", "tags"};
+    	columnNames = new String[] {"id", "name"};
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-    	return Product.getClass(columnIndex);
+    	return Tag.getClass(columnIndex);
     }
 
     @Override
@@ -46,7 +41,7 @@ public class ProductTableModel extends AbstractTableModel {
     }
 
     public Object getValueAt(int row, int col) {
-        Product value = (Product) data.get(row);
+        Tag value = (Tag) data.get(row);
         return value.get(col);
     }
     
@@ -57,33 +52,29 @@ public class ProductTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-    	Product elem = (Product) data.get(row);
+    	Tag elem = (Tag) data.get(row);
         elem.set(col, value);
-        productService.updateProduct(elem);
+        tagService.updateTag(elem);
         fireTableCellUpdated(row, col);
     }
     
     public void fillData() {
-    	data = new ArrayList(productService.listProducts());
+    	data = new ArrayList(tagService.listTags());
     }
     
     public void addEmptyRow() {
     	int index = data.size();
-    	Product newEntry = new Product();
-    	newEntry.setName("newProduct");
-    	productService.persistProduct(newEntry);
+    	Tag newEntry = new Tag();
+    	newEntry.setName("newTag");
+    	tagService.persistTag(newEntry);
     	data.add(newEntry);
     	fireTableRowsInserted(index, index);
     }
     
     public void deleteSelectedRow(int atIndex) {
-    	Product elem = (Product) data.get(atIndex);
-    	productService.deleteProduct(elem);
+    	Tag elem = (Tag) data.get(atIndex);
+    	tagService.deleteTag(elem);
     	data.remove(atIndex);
     	fireTableRowsDeleted(atIndex, atIndex);
-    }
-    
-    public List getAllTags() {
-    	return tagService.listTags();
     }
 }
