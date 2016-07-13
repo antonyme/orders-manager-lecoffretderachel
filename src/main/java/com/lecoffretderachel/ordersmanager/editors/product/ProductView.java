@@ -10,9 +10,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.lecoffretderachel.ordersmanager.editors.TagEditor;
 
 @Component
 public class ProductView {
@@ -20,8 +22,11 @@ public class ProductView {
 	JTable table;
 	JButton btnAddEntry;
 	JButton btnDeleteEntry;
+	TagEditor tagEditor;
 	
-	public ProductView() {
+	@Autowired
+	public ProductView(TagEditor tagEditor) {
+		this.tagEditor = tagEditor;
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createGUI();
@@ -35,6 +40,7 @@ public class ProductView {
 		
 		table.setFont(new Font("", 0, 16));
 		table.setRowHeight(30);
+		table.getColumnModel().getColumn(2).setCellEditor(tagEditor);
 		JScrollPane tablePane = new JScrollPane(table);
 		tablePane.setBounds(0, 0, 880, 200);
 		tablePane.setPreferredSize(tablePane.getSize());
@@ -62,10 +68,6 @@ public class ProductView {
 	
 	public void injectModelIntoTable(AbstractTableModel model) {
 		table.setModel(model);
-	}
-	
-	public void addTagEditor(TableCellEditor cellEditor) {
-		table.getColumnModel().getColumn(2).setCellEditor(cellEditor);;
 	}
 	
 	public void addBtnAddEntryListener(ActionListener listener) {
