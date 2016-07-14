@@ -8,25 +8,25 @@ import org.springframework.stereotype.Repository;
 
 import com.lecoffretderachel.ordersmanager.model.Inventory;
 
-@Repository("InventoryDAO")
+@Repository("inventoryDAO")
 public class InventoryDAOImpl implements InventoryDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public void persist(Inventory Inventory) {
-		sessionFactory.getCurrentSession().persist(Inventory);
+	public void persist(Inventory inventory) {
+		sessionFactory.getCurrentSession().persist(inventory);
 	}
 
 	public List listAll() {
-		return sessionFactory.getCurrentSession().createQuery("from Inventory").list();
+		return sessionFactory.getCurrentSession().createQuery("from inventory").list();
 	}
 
 	public Inventory findById(Integer id) {
 		return (Inventory) sessionFactory.getCurrentSession().get(Inventory.class, id);
 	}
 
-	public void update(Inventory Inventory) {
-		sessionFactory.getCurrentSession().update(Inventory);
+	public void update(Inventory inventory) {
+		sessionFactory.getCurrentSession().update(inventory);
 	}
 	
 	public void delete(Inventory Inventory) {

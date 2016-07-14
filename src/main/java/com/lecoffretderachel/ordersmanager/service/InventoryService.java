@@ -5,9 +5,9 @@ import java.util.List;
 import com.lecoffretderachel.ordersmanager.model.Inventory;
 
 public interface InventoryService {
-	void persistInventory(Inventory Inventory);
+	void persistInventory(Inventory inventory);
 	List listInventorys();
 	Inventory findInventoryById(Integer i);
-	void updateInventory(Inventory Inventory);
-	void deleteInventory(Inventory Inventory);
+	void updateInventory(Inventory inventory);
+	void deleteInventory(Inventory inventory);
 }

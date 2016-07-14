@@ -9,34 +9,34 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lecoffretderachel.ordersmanager.dao.InventoryDAO;
 import com.lecoffretderachel.ordersmanager.model.Inventory;
 
-@Service("InventoryService")
+@Service("inventoryService")
 public class InventoryServiceImpl implements InventoryService{
 
 	@Autowired
-	InventoryDAO InventoryDAO;
+	InventoryDAO inventoryDAO;
 	
 	@Transactional
-	public void persistInventory(Inventory Inventory) {
-		InventoryDAO.persist(Inventory);
+	public void persistInventory(Inventory inventory) {
+		inventoryDAO.persist(inventory);
 	}
 
 	@Transactional
 	public List listInventorys() {
-		return InventoryDAO.listAll();
+		return inventoryDAO.listAll();
 	}
 
 	@Transactional
-	public void updateInventory(Inventory Inventory) {
-		InventoryDAO.update(Inventory);
+	public void updateInventory(Inventory inventory) {
+		inventoryDAO.update(inventory);
 	}
 	
 	@Transactional
 	public Inventory findInventoryById(Integer id) {
-		return InventoryDAO.findById(id);
+		return inventoryDAO.findById(id);
 	}
 
 	@Transactional
-	public void deleteInventory(Inventory Inventory) {
-		InventoryDAO.delete(Inventory);
+	public void deleteInventory(Inventory inventory) {
+		inventoryDAO.delete(inventory);
 	}
 }
