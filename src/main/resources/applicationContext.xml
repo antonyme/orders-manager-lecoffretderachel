@@ -25,6 +25,7 @@
 			<list>
 				<value>com.lecoffretderachel.ordersmanager.model.Product</value>
 				<value>com.lecoffretderachel.ordersmanager.model.Tag</value>
+				<value>com.lecoffretderachel.ordersmanager.model.Inventory</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

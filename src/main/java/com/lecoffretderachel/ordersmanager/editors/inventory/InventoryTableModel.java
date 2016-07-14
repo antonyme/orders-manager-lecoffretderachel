@@ -1,4 +1,4 @@
-package com.lecoffretderachel.ordersmanager.editors.product;
+package com.lecoffretderachel.ordersmanager.editors.inventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,28 +8,28 @@ import javax.swing.table.AbstractTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.lecoffretderachel.ordersmanager.model.Inventory;
 import com.lecoffretderachel.ordersmanager.model.Product;
+import com.lecoffretderachel.ordersmanager.service.InventoryService;
 import com.lecoffretderachel.ordersmanager.service.ProductService;
-import com.lecoffretderachel.ordersmanager.service.TagService;
 
 @Component
-public class ProductTableModel extends AbstractTableModel {
-
+public class InventoryTableModel extends AbstractTableModel {
+	final InventoryService inventoryService;
 	final ProductService productService;
-	final TagService tagService;
     String[] columnNames;
     ArrayList data;
 
     @Autowired
-    public ProductTableModel(ProductService productService, TagService tagService) {
+    public InventoryTableModel(InventoryService inventoryService, ProductService productService) {
+    	this.inventoryService = inventoryService;
     	this.productService = productService;
-    	this.tagService = tagService;
-    	columnNames = Product.getHeaders();
+    	columnNames = Inventory.getHeaders();
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-    	return Product.getClass(columnIndex);
+    	return Inventory.getClass(columnIndex);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ProductTableModel extends AbstractTableModel {
     }
 
     public Object getValueAt(int row, int col) {
-        Product value = (Product) data.get(row);
+        Inventory value = (Inventory) data.get(row);
         return value.get(col);
     }
     
@@ -57,32 +57,33 @@ public class ProductTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-    	Product elem = (Product) data.get(row);
+    	Inventory elem = (Inventory) data.get(row);
         elem.set(col, value);
-        productService.updateProduct(elem);
+        inventoryService.updateInventory(elem);
         fireTableCellUpdated(row, col);
     }
     
     public void fillData() {
-    	data = new ArrayList(productService.listProducts());
+    	data = new ArrayList(inventoryService.listInventorys());
     }
     
     public void addEmptyRow() {
     	int index = data.size();
-    	Product newEntry = new Product();
-    	productService.persistProduct(newEntry);
+    	Inventory newEntry = new Inventory();
+    	newEntry.setProduct(productService.findFirst());
+    	inventoryService.persistInventory(newEntry);
     	data.add(newEntry);
     	fireTableRowsInserted(index, index);
     }
     
     public void deleteSelectedRow(int atIndex) {
-    	Product elem = (Product) data.get(atIndex);
-    	productService.deleteProduct(elem);
+    	Inventory elem = (Inventory) data.get(atIndex);
+    	inventoryService.deleteInventory(elem);
     	data.remove(atIndex);
     	fireTableRowsDeleted(atIndex, atIndex);
     }
     
-    public List getAllTags() {
-    	return tagService.listTags();
+    public List<Product> listProduct() {
+    	return productService.listProducts();
     }
 }

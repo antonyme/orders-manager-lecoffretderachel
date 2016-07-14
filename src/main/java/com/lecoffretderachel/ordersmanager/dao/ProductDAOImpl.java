@@ -20,6 +20,15 @@ public class ProductDAOImpl implements ProductDAO {
 	public List listAll() {
 		return sessionFactory.getCurrentSession().createQuery("from Product").list();
 	}
+	
+	public Product findFirst() {
+		return (Product) sessionFactory.getCurrentSession()
+				.createCriteria(Product.class)
+				.setFirstResult(0)
+				.setMaxResults(1)
+				.list()
+				.get(0);
+	}
 
 	public Product findById(Integer id) {
 		return (Product) sessionFactory.getCurrentSession().get(Product.class, id);

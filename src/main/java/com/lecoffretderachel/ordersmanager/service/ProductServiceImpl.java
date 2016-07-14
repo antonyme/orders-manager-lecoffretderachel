@@ -24,6 +24,11 @@ public class ProductServiceImpl implements ProductService{
 	public List listProducts() {
 		return productDAO.listAll();
 	}
+	
+	@Transactional
+	public Product findFirst() {
+		return productDAO.findFirst();
+	}
 
 	@Transactional
 	public void updateProduct(Product product) {

@@ -21,7 +21,9 @@ public class Product implements java.io.Serializable {
 	private String name;
 	private Set<Tag> tags = new HashSet<Tag>();
 	
-	public Product() {}
+	public Product() {
+		this.name = "newProduct";
+	}
 	
 	public Product(String name) {
 		this.name = name;
@@ -71,6 +73,10 @@ public class Product implements java.io.Serializable {
 		}
 	}
 	
+	public static String[] getHeaders() {
+		return new String[] {"id", "name", "tags"};
+	}
+	
 	public Object get(int i) {
 		switch(i) {
 		case 0:
@@ -98,5 +104,10 @@ public class Product implements java.io.Serializable {
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 }
