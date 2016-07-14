@@ -1,8 +1,7 @@
 package com.lecoffretderachel.ordersmanager.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,7 +18,7 @@ import javax.persistence.Table;
 public class Product implements java.io.Serializable {
 	private Integer id;
 	private String name;
-	private Set<Tag> tags = new HashSet<Tag>();
+	private List<Tag> tags = new ArrayList<Tag>();
 	
 	public Product() {
 		this.name = "newProduct";
@@ -52,11 +51,11 @@ public class Product implements java.io.Serializable {
 		joinColumns = @JoinColumn(name = "product_id"),
 		inverseJoinColumns = @JoinColumn(name = "tag_id")
 	)
-	public Set<Tag> getTags() {
+	public List<Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(Set<Tag> tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
 	
@@ -99,7 +98,7 @@ public class Product implements java.io.Serializable {
 			name = (String) value;
 			break;
 		case 2:
-			tags = (Set<Tag>) value;
+			tags = (List<Tag>) value;
 			break;
 		default:
 			break;

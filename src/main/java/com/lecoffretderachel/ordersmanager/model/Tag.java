@@ -1,8 +1,7 @@
 package com.lecoffretderachel.ordersmanager.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,7 @@ import javax.persistence.Table;
 public class Tag implements java.io.Serializable, Comparable {
 	private Integer id;
 	private String name;
-	private Set<Product> include = new HashSet<Product>();
+	private List<Product> include = new ArrayList<Product>();
 
 	public Tag() {}
 	
@@ -42,10 +41,10 @@ public class Tag implements java.io.Serializable, Comparable {
 	}
 
 	@ManyToMany(mappedBy = "tags")
-	public Set<Product> getPreferences() {
+	public List<Product> getPreferences() {
 		return include;
 	}
-	public void setPreferences(Set<Product> preferences) {
+	public void setPreferences(List<Product> preferences) {
 		this.include = preferences;
 	}
 	

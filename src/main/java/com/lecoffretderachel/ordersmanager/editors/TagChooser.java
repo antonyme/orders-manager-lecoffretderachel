@@ -57,6 +57,12 @@ public class TagChooser extends JPanel {
 		fillListModel(sourceListModel, newValue);
 	}
 
+	public void removeSourceElements(List oldValue) {
+		for (int i = oldValue.size() - 1; i >= 0; --i) {
+			sourceListModel.removeElement(oldValue.get(i));
+		}
+	}
+
 	public void setSourceElements(List newValue) {
 		clearSourceListModel();
 		addSourceElements(newValue);
@@ -64,6 +70,12 @@ public class TagChooser extends JPanel {
 
 	public void addDestinationElements(List newValue) {
 		fillListModel(destListModel, newValue);
+	}
+
+	public void removeDestinationElements(List oldValue) {
+		for (int i = oldValue.size() - 1; i >= 0; --i) {
+			destListModel.removeElement(oldValue.get(i));
+		}
 	}
 
 	public void setDestinationElements(List newValue) {
@@ -113,17 +125,13 @@ public class TagChooser extends JPanel {
 	
 	private void clearSourceSelected() {
 		List selected = sourceList.getSelectedValuesList();
-		for (int i = selected.size() - 1; i >= 0; --i) {
-			sourceListModel.removeElement(selected.get(i));
-		}
+		removeSourceElements(selected);
 		sourceList.getSelectionModel().clearSelection();
 	}
 
 	private void clearDestinationSelected() {
 		List selected = destList.getSelectedValuesList();
-		for (int i = selected.size() - 1; i >= 0; --i) {
-			destListModel.removeElement(selected.get(i));
-		}
+		removeDestinationElements(selected);
 		destList.getSelectionModel().clearSelection();
 	}
 

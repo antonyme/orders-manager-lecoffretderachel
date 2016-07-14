@@ -2,8 +2,7 @@ package com.lecoffretderachel.ordersmanager.editors;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Set;
-
+import java.util.List;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -13,7 +12,6 @@ import javax.swing.table.TableCellEditor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.lecoffretderachel.ordersmanager.Util;
 import com.lecoffretderachel.ordersmanager.model.Tag;
 import com.lecoffretderachel.ordersmanager.service.TagService;
 
@@ -22,7 +20,7 @@ public class TagEditor extends AbstractCellEditor
 		implements TableCellEditor,
 					ActionListener {
 	TagService tagService;
-	Set<Tag> currentTags;
+	List<Tag> currentTags;
 	JButton button;
 	TagChooser tagChooser;
 	JDialog dialog;
@@ -53,9 +51,10 @@ public class TagEditor extends AbstractCellEditor
 		if (EDIT.equals(e.getActionCommand())) {
 			//The user has clicked the cell, so
 			//bring up the dialog.
-			button.setName(Util.setToString(currentTags));
+			button.setSelected(false);
+			tagChooser.setDestinationElements(currentTags);
 			tagChooser.setSourceElements(tagService.listTags());
-			tagChooser.clearDestinationListModel();
+			tagChooser.removeSourceElements(currentTags);
 			dialog.pack();
 			dialog.setVisible(true);
 			
@@ -79,7 +78,7 @@ public class TagEditor extends AbstractCellEditor
 	                            boolean isSelected,
 	                            int row,
 	                            int column) {
-		currentTags = (Set<Tag>) value;
+		currentTags = (List<Tag>) value;
 		return button;
 	}
 }
