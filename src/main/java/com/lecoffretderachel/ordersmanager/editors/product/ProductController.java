@@ -20,6 +20,7 @@ public class ProductController {
 		theView.injectModelIntoTable(theModel);
 		theView.addBtnAddEntryListener(new BtnAddEntryListener());
 		theView.addBtnDeleteEntryListener(new BtnDeleteEntryListener());
+		theView.addTagColumnCellEditor();
 	}
 	
 	public void show() {

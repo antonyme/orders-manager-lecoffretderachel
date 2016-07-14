@@ -3,6 +3,7 @@ package com.lecoffretderachel.ordersmanager.editors.product;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,18 +21,26 @@ import com.lecoffretderachel.ordersmanager.editors.TagEditor;
 public class ProductView {
 	JFrame frame;
 	JTable table;
-	JButton btnAddEntry;
-	JButton btnDeleteEntry;
+	JButton btnAddEntry = new JButton("Ajouter");
+	JButton btnDeleteEntry = new JButton("Supprimer");
 	TagEditor tagEditor;
 	
 	@Autowired
 	public ProductView(TagEditor tagEditor) {
 		this.tagEditor = tagEditor;
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createGUI();
-            }
-        });
+		try {
+			javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+			    public void run() {
+			        createGUI();
+			    }
+			});
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
     private void createGUI() {
@@ -40,13 +49,10 @@ public class ProductView {
 		
 		table.setFont(new Font("", 0, 16));
 		table.setRowHeight(30);
-		table.getColumnModel().getColumn(2).setCellEditor(tagEditor);
 		JScrollPane tablePane = new JScrollPane(table);
 		tablePane.setBounds(0, 0, 880, 200);
 		tablePane.setPreferredSize(tablePane.getSize());
 		
-		btnAddEntry = new JButton("Ajouter");
-		btnDeleteEntry = new JButton("Supprimer");
 		JPanel btnPane = new JPanel();
 		btnPane.add(btnAddEntry);
 		btnPane.add(btnDeleteEntry);
@@ -76,5 +82,9 @@ public class ProductView {
 	
 	public void addBtnDeleteEntryListener(ActionListener listener) {
 		btnDeleteEntry.addActionListener(listener);
+	}
+	
+	public void addTagColumnCellEditor() {
+		table.getColumnModel().getColumn(2).setCellEditor(tagEditor);
 	}
 }
