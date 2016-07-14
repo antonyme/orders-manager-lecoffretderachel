@@ -1,6 +1,7 @@
 package com.lecoffretderachel.ordersmanager.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -83,6 +84,7 @@ public class Product implements java.io.Serializable {
 		case 1:
 			return name;
 		case 2:
+			Collections.sort(tags);
 			return tags;
 		default:
 			return null;
