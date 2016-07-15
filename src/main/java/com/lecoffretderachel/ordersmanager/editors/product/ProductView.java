@@ -13,20 +13,19 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.lecoffretderachel.ordersmanager.editors.TagEditor;
+import com.lecoffretderachel.ordersmanager.editors.DualListEditor;
 
-@Component
 public class ProductView {
 	JFrame frame;
 	JTable table;
 	JButton btnAddEntry = new JButton("Ajouter");
 	JButton btnDeleteEntry = new JButton("Supprimer");
-	TagEditor tagEditor;
+	DualListEditor tagEditor;
 	
-	@Autowired
-	public ProductView(TagEditor tagEditor) {
+	public ProductView(DualListEditor tagEditor) {
 		this.tagEditor = tagEditor;
 		try {
 			javax.swing.SwingUtilities.invokeAndWait(new Runnable() {

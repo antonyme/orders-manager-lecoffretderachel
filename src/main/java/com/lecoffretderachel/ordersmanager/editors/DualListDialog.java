@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-public class TagChooser extends JPanel {
+public class DualListDialog extends JPanel {
 	private static final Insets EMPTY_INSETS = new Insets(0, 0, 0, 0);
 	private static final String ADD_BUTTON_LABEL = "Add >>";
 	private static final String REMOVE_BUTTON_LABEL = "<< Remove";
@@ -41,7 +41,7 @@ public class TagChooser extends JPanel {
 	private JButton addButton;
 	private JButton removeButton;
 
-	public TagChooser() {
+	public DualListDialog() {
 		initScreen();
 	}
 
@@ -164,7 +164,7 @@ public class TagChooser extends JPanel {
 				GridBagConstraints.BOTH, EMPTY_INSETS, 0, 0));
 	}
 
-	public static JDialog createDialog(JButton button, String title, TagChooser dual, ActionListener listener) {
+	public static JDialog createDialog(JButton button, String title, DualListDialog dual, ActionListener listener) {
 		JButton ok = new JButton("Ok");
 		ok.addActionListener(listener);
 		JDialog dialog = new JDialog((JFrame) SwingUtilities.getRoot(button), title, true);

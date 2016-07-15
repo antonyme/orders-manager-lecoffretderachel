@@ -59,31 +59,31 @@ public class InventoryTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
     	Inventory elem = (Inventory) data.get(row);
         elem.set(col, value);
-        inventoryService.updateInventory(elem);
+        inventoryService.update(elem);
         fireTableCellUpdated(row, col);
     }
     
     public void fillData() {
-    	data = new ArrayList(inventoryService.listInventorys());
+    	data = new ArrayList(inventoryService.list());
     }
     
     public void addEmptyRow() {
     	int index = data.size();
     	Inventory newEntry = new Inventory();
     	newEntry.setProduct(productService.findFirst());
-    	inventoryService.persistInventory(newEntry);
+    	inventoryService.persist(newEntry);
     	data.add(newEntry);
     	fireTableRowsInserted(index, index);
     }
     
     public void deleteSelectedRow(int atIndex) {
     	Inventory elem = (Inventory) data.get(atIndex);
-    	inventoryService.deleteInventory(elem);
+    	inventoryService.delete(elem);
     	data.remove(atIndex);
     	fireTableRowsDeleted(atIndex, atIndex);
     }
     
     public List<Product> listProduct() {
-    	return productService.listProducts();
+    	return productService.list();
     }
 }

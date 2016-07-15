@@ -18,7 +18,7 @@ public class InventoryDAOImpl implements InventoryDAO {
 	}
 
 	public List listAll() {
-		return sessionFactory.getCurrentSession().createQuery("from inventory").list();
+		return sessionFactory.getCurrentSession().createQuery("from Inventory").list();
 	}
 
 	public Inventory findById(Integer id) {

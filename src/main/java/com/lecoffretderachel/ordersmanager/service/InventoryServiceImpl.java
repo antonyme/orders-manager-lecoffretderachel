@@ -16,27 +16,27 @@ public class InventoryServiceImpl implements InventoryService{
 	InventoryDAO inventoryDAO;
 	
 	@Transactional
-	public void persistInventory(Inventory inventory) {
+	public void persist(Inventory inventory) {
 		inventoryDAO.persist(inventory);
 	}
 
 	@Transactional
-	public List listInventorys() {
+	public List list() {
 		return inventoryDAO.listAll();
 	}
 
 	@Transactional
-	public void updateInventory(Inventory inventory) {
+	public void update(Inventory inventory) {
 		inventoryDAO.update(inventory);
 	}
 	
 	@Transactional
-	public Inventory findInventoryById(Integer id) {
+	public Inventory findById(Integer id) {
 		return inventoryDAO.findById(id);
 	}
 
 	@Transactional
-	public void deleteInventory(Inventory inventory) {
+	public void delete(Inventory inventory) {
 		inventoryDAO.delete(inventory);
 	}
 }

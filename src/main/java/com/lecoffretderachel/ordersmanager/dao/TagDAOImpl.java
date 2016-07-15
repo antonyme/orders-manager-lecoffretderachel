@@ -8,11 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import com.lecoffretderachel.ordersmanager.model.Tag;
 
-@Repository("tagDAO")
 public class TagDAOImpl implements TagDAO {
-	@Autowired
+
 	private SessionFactory sessionFactory;
 
+	public TagDAOImpl(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 	public void persist(Tag tag) {
 		sessionFactory.getCurrentSession().persist(tag);
 	}

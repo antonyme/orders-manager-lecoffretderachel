@@ -14,6 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "customer")
 public class Customer implements java.io.Serializable {
@@ -48,7 +51,7 @@ public class Customer implements java.io.Serializable {
 		return null;
 	}
 
-	@Column(name = "name")
+	@Column(name = "email")
 	public String getEmail() {
 		return email;
 	}
@@ -57,7 +60,7 @@ public class Customer implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "name")
+	@Column(name = "first_name")
 	public String getFirstName() {
 		return firstName;
 	}
@@ -66,7 +69,7 @@ public class Customer implements java.io.Serializable {
 		this.firstName = firstName;
 	}
 
-	@Column(name = "name")
+	@Column(name = "last_name")
 	public String getLastName() {
 		return lastName;
 	}
@@ -75,7 +78,7 @@ public class Customer implements java.io.Serializable {
 		this.lastName = lastName;
 	}
 
-	@Column(name = "name")
+	@Column(name = "note")
 	public String getNote() {
 		return note;
 	}
@@ -84,7 +87,8 @@ public class Customer implements java.io.Serializable {
 		this.note = note;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(
 		name = "customer_tag_include",
 		joinColumns = @JoinColumn(name = "customer_id"),
@@ -98,7 +102,8 @@ public class Customer implements java.io.Serializable {
 		this.tagsIncluded = tagsIncluded;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(
 		name = "customer_tag_excluded",
 		joinColumns = @JoinColumn(name = "customer_id"),
@@ -112,11 +117,12 @@ public class Customer implements java.io.Serializable {
 		this.tagsExcluded = tagsExcluded;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(
 		name = "customer_product_include",
-		joinColumns = @JoinColumn(name = "product_id"),
-		inverseJoinColumns = @JoinColumn(name = "tag_id")
+		joinColumns = @JoinColumn(name = "customer_id"),
+		inverseJoinColumns = @JoinColumn(name = "product_id")
 	)
 	public List<Product> getProductsIncluded() {
 		return productsIncluded;
@@ -126,11 +132,12 @@ public class Customer implements java.io.Serializable {
 		this.productsIncluded = productsIncluded;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(
 		name = "customer_product_exclude",
-		joinColumns = @JoinColumn(name = "product_id"),
-		inverseJoinColumns = @JoinColumn(name = "tag_id")
+		joinColumns = @JoinColumn(name = "customer_id"),
+		inverseJoinColumns = @JoinColumn(name = "product_id")
 	)
 	public List<Product> getProductsExcluded() {
 		return productsExcluded;
@@ -140,7 +147,8 @@ public class Customer implements java.io.Serializable {
 		this.productsExcluded = productsExcluded;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "orderOwner")
+	@OneToMany(mappedBy = "orderOwner")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	public List<Order> getOrders() {
 		return orders;
 	}

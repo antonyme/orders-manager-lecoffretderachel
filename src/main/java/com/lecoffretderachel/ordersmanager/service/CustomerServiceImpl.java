@@ -16,27 +16,27 @@ public class CustomerServiceImpl implements CustomerService{
 	CustomerDAO customerDAO;
 	
 	@Transactional
-	public void persistCustomer(Customer customer) {
+	public void persist(Customer customer) {
 		customerDAO.persist(customer);
 	}
 
 	@Transactional
-	public List listCustomers() {
+	public List list() {
 		return customerDAO.listAll();
 	}
 
 	@Transactional
-	public void updateCustomer(Customer customer) {
+	public void update(Customer customer) {
 		customerDAO.update(customer);
 	}
 	
 	@Transactional
-	public Customer findCustomerById(Integer id) {
+	public Customer findById(Integer id) {
 		return customerDAO.findById(id);
 	}
 
 	@Transactional
-	public void deleteCustomer(Customer customer) {
+	public void delete(Customer customer) {
 		customerDAO.delete(customer);
 	}
 }

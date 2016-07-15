@@ -54,26 +54,26 @@ public class TagTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
     	Tag elem = (Tag) data.get(row);
         elem.set(col, value);
-        tagService.updateTag(elem);
+        tagService.update(elem);
         fireTableCellUpdated(row, col);
     }
     
     public void fillData() {
-    	data = new ArrayList(tagService.listTags());
+    	data = new ArrayList(tagService.list());
     }
     
     public void addEmptyRow() {
     	int index = data.size();
     	Tag newEntry = new Tag();
     	newEntry.setName("newTag");
-    	tagService.persistTag(newEntry);
+    	tagService.persist(newEntry);
     	data.add(newEntry);
     	fireTableRowsInserted(index, index);
     }
     
     public void deleteSelectedRow(int atIndex) {
     	Tag elem = (Tag) data.get(atIndex);
-    	tagService.deleteTag(elem);
+    	tagService.delete(elem);
     	data.remove(atIndex);
     	fireTableRowsDeleted(atIndex, atIndex);
     }

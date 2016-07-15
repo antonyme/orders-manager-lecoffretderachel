@@ -10,25 +10,23 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.lecoffretderachel.ordersmanager.model.Tag;
-import com.lecoffretderachel.ordersmanager.service.TagService;
+import com.lecoffretderachel.ordersmanager.service.ListService;
 
-@Component
-public class TagEditor extends AbstractCellEditor
+public class DualListEditor extends AbstractCellEditor
 		implements TableCellEditor,
 					ActionListener {
-	TagService tagService;
-	List<Tag> currentTags;
+	ListService service;
+	List currentList;
 	JButton button;
-	TagChooser tagChooser;
+	DualListDialog dualListDialog;
 	JDialog dialog;
 	protected static final String EDIT = "edit";
 
-	@Autowired
-	public TagEditor(TagService tagService) {
-		this.tagService = tagService;
+	public DualListEditor(ListService service) {
+		this.service = service;
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createGUI();
@@ -43,8 +41,8 @@ public class TagEditor extends AbstractCellEditor
 		button.setBorderPainted(false);
 
 		//Set up the dialog that the button brings up.
-		tagChooser = new TagChooser();
-		dialog = TagChooser.createDialog(button, "Pick tags", tagChooser, this);
+		dualListDialog = new DualListDialog();
+		dialog = DualListDialog.createDialog(button, "Pick tags", dualListDialog, this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -52,24 +50,24 @@ public class TagEditor extends AbstractCellEditor
 			//The user has clicked the cell, so
 			//bring up the dialog.
 			button.setSelected(false);
-			tagChooser.setDestinationElements(currentTags);
-			tagChooser.setSourceElements(tagService.listTags());
-			tagChooser.removeSourceElements(currentTags);
+			dualListDialog.setDestinationElements(currentList);
+			dualListDialog.setSourceElements(service.list());
+			dualListDialog.removeSourceElements(currentList);
 			dialog.pack();
 			dialog.setVisible(true);
 			
 			fireEditingStopped(); //Make the renderer reappear.
 
 		} else { //User pressed dialog's "OK" button.
-			currentTags.clear();
-			currentTags.addAll(tagChooser.getDestinationTags());
+			currentList.clear();
+			currentList.addAll(dualListDialog.getDestinationTags());
 			dialog.setVisible(false);
 		}
 	}
 
 	//Implement the one CellEditor method that AbstractCellEditor doesn't.
 	public Object getCellEditorValue() {
-		return currentTags;
+		return currentList;
 	}
 	
 	//Implement the one method defined by TableCellEditor.
@@ -78,7 +76,7 @@ public class TagEditor extends AbstractCellEditor
 	                            boolean isSelected,
 	                            int row,
 	                            int column) {
-		currentTags = (List<Tag>) value;
+		currentList = (List) value;
 		return button;
 	}
 }

@@ -5,9 +5,9 @@ import java.util.List;
 import com.lecoffretderachel.ordersmanager.model.Tag;
 
 public interface TagService {
-	void persistTag(Tag tag);
-	List listTags();
-	Tag findTagById(Integer i);
-	void updateTag(Tag tag);
-	void deleteTag(Tag tag);
+	void persist(Tag tag);
+	List list();
+	Tag findById(Integer i);
+	void update(Tag tag);
+	void delete(Tag tag);
 }

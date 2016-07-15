@@ -12,16 +12,19 @@ import com.lecoffretderachel.ordersmanager.model.Product;
 @Service("productService")
 public class ProductServiceImpl implements ProductService{
 
-	@Autowired
 	ProductDAO productDAO;
 	
+	public ProductServiceImpl(ProductDAO productDAO) {
+		this.productDAO = productDAO;
+	}
+	
 	@Transactional
-	public void persistProduct(Product product) {
+	public void persist(Product product) {
 		productDAO.persist(product);
 	}
 
 	@Transactional
-	public List listProducts() {
+	public List list() {
 		return productDAO.listAll();
 	}
 	
@@ -31,17 +34,17 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Transactional
-	public void updateProduct(Product product) {
+	public void update(Product product) {
 		productDAO.update(product);
 	}
 	
 	@Transactional
-	public Product findProductById(Integer id) {
+	public Product findById(Integer id) {
 		return productDAO.findById(id);
 	}
 
 	@Transactional
-	public void deleteProduct(Product product) {
+	public void delete(Product product) {
 		productDAO.delete(product);
 	}
 }

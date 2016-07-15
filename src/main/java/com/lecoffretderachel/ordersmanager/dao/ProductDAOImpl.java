@@ -10,9 +10,13 @@ import com.lecoffretderachel.ordersmanager.model.Product;
 
 @Repository("productDAO")
 public class ProductDAOImpl implements ProductDAO {
-	@Autowired
+
 	private SessionFactory sessionFactory;
 
+	public ProductDAOImpl(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 	public void persist(Product product) {
 		sessionFactory.getCurrentSession().persist(product);
 	}

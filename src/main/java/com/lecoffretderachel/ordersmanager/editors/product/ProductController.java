@@ -6,12 +6,10 @@ import java.awt.event.ActionListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
 public class ProductController {
 	final ProductView theView;
 	final ProductTableModel theModel;
 	
-	@Autowired
 	public ProductController(ProductView theView, ProductTableModel theModel) {
 		this.theView = theView;
 		this.theModel = theModel;

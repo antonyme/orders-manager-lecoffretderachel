@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+@Entity
+@Table(name = "order_table")
 public class Order {
 	private Integer id;
 	private Boolean subsciption;
@@ -164,7 +171,8 @@ public class Order {
 		this.shippingCountry = shippingCountry;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "customer_id")
 	public Customer getOrderOwner() {
 		return orderOwner;
@@ -174,7 +182,8 @@ public class Order {
 		this.orderOwner = orderOwner;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(
 		name = "order_product",
 		joinColumns = @JoinColumn(name = "order_id"),

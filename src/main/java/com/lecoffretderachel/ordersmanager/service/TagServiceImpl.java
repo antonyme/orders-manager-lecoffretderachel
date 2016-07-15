@@ -9,34 +9,36 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lecoffretderachel.ordersmanager.dao.TagDAO;
 import com.lecoffretderachel.ordersmanager.model.Tag;
 
-@Service("tagService")
-public class TagServiceImpl implements TagService{
+public class TagServiceImpl implements TagService, ListService {
 
-	@Autowired
 	TagDAO tagDAO;
 	
+	public TagServiceImpl(TagDAO tagDAO) {
+		this.tagDAO = tagDAO;
+	}
+	
 	@Transactional
-	public void persistTag(Tag tag) {
+	public void persist(Tag tag) {
 		tagDAO.persist(tag);
 	}
 
 	@Transactional
-	public List listTags() {
+	public List list() {
 		return tagDAO.listAll();
 	}
 
 	@Transactional
-	public void updateTag(Tag tag) {
+	public void update(Tag tag) {
 		tagDAO.update(tag);
 	}
 	
 	@Transactional
-	public Tag findTagById(Integer id) {
+	public Tag findById(Integer id) {
 		return tagDAO.findById(id);
 	}
 
 	@Transactional
-	public void deleteTag(Tag tag) {
+	public void delete(Tag tag) {
 		tagDAO.delete(tag);
 	}
 }

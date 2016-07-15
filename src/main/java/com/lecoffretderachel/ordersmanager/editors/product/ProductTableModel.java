@@ -12,7 +12,6 @@ import com.lecoffretderachel.ordersmanager.model.Product;
 import com.lecoffretderachel.ordersmanager.service.ProductService;
 import com.lecoffretderachel.ordersmanager.service.TagService;
 
-@Component
 public class ProductTableModel extends AbstractTableModel {
 
 	final ProductService productService;
@@ -20,7 +19,6 @@ public class ProductTableModel extends AbstractTableModel {
     String[] columnNames;
     ArrayList data;
 
-    @Autowired
     public ProductTableModel(ProductService productService, TagService tagService) {
     	this.productService = productService;
     	this.tagService = tagService;
@@ -59,30 +57,30 @@ public class ProductTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
     	Product elem = (Product) data.get(row);
         elem.set(col, value);
-        productService.updateProduct(elem);
+        productService.update(elem);
         fireTableCellUpdated(row, col);
     }
     
     public void fillData() {
-    	data = new ArrayList(productService.listProducts());
+    	data = new ArrayList(productService.list());
     }
     
     public void addEmptyRow() {
     	int index = data.size();
     	Product newEntry = new Product();
-    	productService.persistProduct(newEntry);
+    	productService.persist(newEntry);
     	data.add(newEntry);
     	fireTableRowsInserted(index, index);
     }
     
     public void deleteSelectedRow(int atIndex) {
     	Product elem = (Product) data.get(atIndex);
-    	productService.deleteProduct(elem);
+    	productService.delete(elem);
     	data.remove(atIndex);
     	fireTableRowsDeleted(atIndex, atIndex);
     }
     
     public List getAllTags() {
-    	return tagService.listTags();
+    	return tagService.list();
     }
 }
