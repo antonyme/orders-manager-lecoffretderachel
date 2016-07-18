@@ -1,6 +1,7 @@
 package com.lecoffretderachel.ordersmanager.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,9 +32,17 @@ public class Customer implements java.io.Serializable {
 	private List<Order> orders = new ArrayList<Order>();
 	
 	public Customer() {
+		this.email = "newEmail";
+		this.firstName = "newFirstName";
+		this.lastName = "newLastName";
+		this.note = "newNote";
 	}
 	
 	public Customer(String email, String firstName, String lastName, String note) {
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.note = note;
 	}
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,11 +52,6 @@ public class Customer implements java.io.Serializable {
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@Override
-	public String toString() {
-		return null;
 	}
 
 	@Column(name = "email")
@@ -104,7 +108,7 @@ public class Customer implements java.io.Serializable {
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(
-		name = "customer_tag_excluded",
+		name = "customer_tag_exclude",
 		joinColumns = @JoinColumn(name = "customer_id"),
 		inverseJoinColumns = @JoinColumn(name = "tag_id")
 	)
@@ -160,19 +164,40 @@ public class Customer implements java.io.Serializable {
 		switch(i) {
 		case 0:
 			return Integer.class;
+		case 1:
+			return String.class;
+		case 2:
+			return String.class;
+		case 3:
+			return String.class;
+		case 4:
+			return String.class;
+		case 5:
+			return String.class;
 		default:
 			return null;
 		}
 	}
 	
 	public static String[] getHeaders() {
-		return new String[] {"id", "name", "tags"};
+		return new String[] {"id", "email", "firstName", "lastName", "note", "tagsIncluded"};
 	}
 	
 	public Object get(int i) {
 		switch(i) {
 		case 0:
 			return id;
+		case 1:
+			return email;
+		case 2:
+			return firstName;
+		case 3:
+			return lastName;
+		case 4:
+			return note;
+		case 5:
+			Collections.sort(tagsIncluded);
+			return tagsIncluded;
 		default:
 			return null;
 		}
@@ -183,8 +208,28 @@ public class Customer implements java.io.Serializable {
 		case 0:
 			id = (Integer) value;
 			break;
+		case 1:
+			email = (String) value;
+			break;
+		case 2:
+			firstName = (String) value;
+			break;
+		case 3:
+			lastName = (String) value;
+			break;
+		case 4:
+			note = (String) value;
+			break;
+		case 5:
+			tagsIncluded = (List<Tag>) value;
+			break;
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return email;
 	}
 }

@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import com.lecoffretderachel.ordersmanager.editors.DualListEditor;
+import com.lecoffretderachel.ordersmanager.editors.customer.CustomerController;
+import com.lecoffretderachel.ordersmanager.editors.customer.CustomerTableModel;
+import com.lecoffretderachel.ordersmanager.editors.customer.CustomerView;
 import com.lecoffretderachel.ordersmanager.editors.inventory.InventoryController;
 import com.lecoffretderachel.ordersmanager.editors.inventory.InventoryTableModel;
 import com.lecoffretderachel.ordersmanager.editors.inventory.InventoryView;
@@ -19,10 +22,25 @@ import com.lecoffretderachel.ordersmanager.service.ListService;
 
 @Configuration
 @Import(DataBaseConfig.class)
-public class OtherConfig {
+public class EditorConfig {
 	
 	@Autowired
 	private DataBaseConfig dataBaseConfig;
+	
+	@Bean
+	public CustomerController getCustomerController() {
+		return new CustomerController(getCustomerView(), getCustomerTableModel());
+	}
+	
+	@Bean
+	public CustomerTableModel getCustomerTableModel() {
+		return new CustomerTableModel(dataBaseConfig.getCustomerService(), dataBaseConfig.getTagService());
+	}
+	
+	@Bean
+	public CustomerView getCustomerView() {
+		return new CustomerView(getDualListEditor());
+	}
 	
 	@Bean
 	public InventoryController getInventoryController() {
@@ -40,21 +58,6 @@ public class OtherConfig {
 	}
 	
 	@Bean
-	public TagController getTagController() {
-		return new TagController(getTagView(), getTagTableModel());
-	}
-	
-	@Bean
-	public TagTableModel getTagTableModel() {
-		return new TagTableModel(dataBaseConfig.getTagService());
-	}
-	
-	@Bean
-	public TagView getTagView() {
-		return new TagView();
-	}
-	
-	@Bean
 	public ProductController getProductController() {
 		return new ProductController(getProductView(), getProductTableModel());
 	}
@@ -67,6 +70,21 @@ public class OtherConfig {
 	@Bean
 	public ProductView getProductView() {
 		return new ProductView(getDualListEditor());
+	}
+	
+	@Bean
+	public TagController getTagController() {
+		return new TagController(getTagView(), getTagTableModel());
+	}
+	
+	@Bean
+	public TagTableModel getTagTableModel() {
+		return new TagTableModel(dataBaseConfig.getTagService());
+	}
+	
+	@Bean
+	public TagView getTagView() {
+		return new TagView();
 	}
 	
 	@Bean

@@ -7,7 +7,6 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
@@ -36,7 +35,6 @@ import com.lecoffretderachel.ordersmanager.service.TagService;
 import com.lecoffretderachel.ordersmanager.service.TagServiceImpl;
 
 @Configuration
-@ComponentScan("com.lecoffretderachel.ordersmanager")
 @EnableTransactionManagement
 public class DataBaseConfig {
 	

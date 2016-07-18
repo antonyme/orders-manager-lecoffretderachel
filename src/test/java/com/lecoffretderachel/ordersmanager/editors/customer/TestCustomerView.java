@@ -1,17 +1,17 @@
-package com.lecoffretderachel.ordersmanager.editors.product;
+package com.lecoffretderachel.ordersmanager.editors.customer;
 
 import org.springframework.context.Lifecycle;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.lecoffretderachel.ordersmanager.injectionconfig.AppConfig;
 
-public class TestProductView implements Lifecycle {
+public class TestCustomerView implements Lifecycle {
 	private static AnnotationConfigApplicationContext context;
 	
 	public static void main(String[] args) {
 		context = new AnnotationConfigApplicationContext(AppConfig.class);
 		context.registerShutdownHook();
-		context.getBean(ProductController.class).show();
+		context.getBean(CustomerController.class).show();
 	}
 
 	public boolean isRunning() {

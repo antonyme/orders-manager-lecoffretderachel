@@ -1,4 +1,4 @@
-package com.lecoffretderachel.ordersmanager.editors.product;
+package com.lecoffretderachel.ordersmanager.editors.customer;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -13,14 +13,14 @@ import javax.swing.table.AbstractTableModel;
 
 import com.lecoffretderachel.ordersmanager.editors.DualListEditor;
 
-public class ProductView {
+public class CustomerView {
 	JFrame frame;
 	JTable table;
 	JButton btnAddEntry = new JButton("Ajouter");
 	JButton btnDeleteEntry = new JButton("Supprimer");
 	DualListEditor tagEditor;
 	
-	public ProductView(DualListEditor tagEditor) {
+	public CustomerView(DualListEditor tagEditor) {
 		this.tagEditor = tagEditor;
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
@@ -71,6 +71,6 @@ public class ProductView {
 	}
 	
 	public void addTagColumnCellEditor() {
-		table.getColumnModel().getColumn(2).setCellEditor(tagEditor);
+		table.getColumnModel().getColumn(5).setCellEditor(tagEditor);
 	}
 }

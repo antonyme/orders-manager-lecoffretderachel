@@ -21,7 +21,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	public List listAll() {
-		return sessionFactory.getCurrentSession().createQuery("from customer").list();
+		return sessionFactory.getCurrentSession().createQuery("from Customer").list();
 	}
 
 	public Customer findById(Integer id) {
