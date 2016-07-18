@@ -12,6 +12,9 @@ import com.lecoffretderachel.ordersmanager.editors.customer.CustomerView;
 import com.lecoffretderachel.ordersmanager.editors.inventory.InventoryController;
 import com.lecoffretderachel.ordersmanager.editors.inventory.InventoryTableModel;
 import com.lecoffretderachel.ordersmanager.editors.inventory.InventoryView;
+import com.lecoffretderachel.ordersmanager.editors.order.OrderController;
+import com.lecoffretderachel.ordersmanager.editors.order.OrderTableModel;
+import com.lecoffretderachel.ordersmanager.editors.order.OrderView;
 import com.lecoffretderachel.ordersmanager.editors.product.ProductController;
 import com.lecoffretderachel.ordersmanager.editors.product.ProductTableModel;
 import com.lecoffretderachel.ordersmanager.editors.product.ProductView;
@@ -55,6 +58,21 @@ public class EditorConfig {
 	@Bean
 	public InventoryView getInventoryView() {
 		return new InventoryView();
+	}
+	
+	@Bean
+	public OrderController getOrderController() {
+		return new OrderController(getOrderView(), getOrderTableModel());
+	}
+	
+	@Bean
+	public OrderTableModel getOrderTableModel() {
+		return new OrderTableModel(dataBaseConfig.getOrderService());
+	}
+	
+	@Bean
+	public OrderView getOrderView() {
+		return new OrderView();
 	}
 	
 	@Bean

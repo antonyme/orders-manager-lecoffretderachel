@@ -98,8 +98,6 @@ public class Inventory implements java.io.Serializable {
 	
 	public void set(int i, Object value) {
 		switch (i) {
-		case 0:
-			break;
 		case 1:
 			product = (Product) value;
 			break;

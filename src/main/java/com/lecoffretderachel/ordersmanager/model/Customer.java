@@ -220,9 +220,6 @@ public class Customer implements java.io.Serializable {
 	
 	public void set(int i, Object value) {
 		switch (i) {
-		case 0:
-			id = (Integer) value;
-			break;
 		case 1:
 			email = (String) value;
 			break;

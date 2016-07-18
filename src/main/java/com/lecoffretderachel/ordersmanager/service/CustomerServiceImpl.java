@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lecoffretderachel.ordersmanager.dao.CustomerDAO;
 import com.lecoffretderachel.ordersmanager.model.Customer;
 
-
 public class CustomerServiceImpl implements CustomerService{
 
 	CustomerDAO customerDAO;

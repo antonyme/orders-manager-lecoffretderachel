@@ -72,9 +72,6 @@ public class Tag implements java.io.Serializable, Comparable {
 	
 	public void set(int i, Object value) {
 		switch (i) {
-		case 0:
-			id = (Integer) value;
-			break;
 		case 1:
 			name = (String) value;
 			break;

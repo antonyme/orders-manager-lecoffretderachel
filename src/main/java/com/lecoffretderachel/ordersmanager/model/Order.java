@@ -10,10 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -22,10 +22,10 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "order_table")
 public class Order {
 	private Integer id;
-	private Boolean subsciption;
+	private Boolean subscription;
 	private Date orderDate;
 	private String customerNote;
-	private String bilingEmail;
+	private String billingEmail;
 	private String shippingFirstName;
 	private String shippingLastName;
 	private String shippingCompany;
@@ -36,7 +36,7 @@ public class Order {
 	private String shippingPostCode;
 	private String shippingCountry;
 	private Customer orderOwner;
-	private List<Product> productsIncluded = new ArrayList<Product>();
+	private List<OrderProduct> orderProductInclude = new ArrayList<OrderProduct>();
 	
 	public Order() {
 	}
@@ -54,12 +54,12 @@ public class Order {
 	}
 
 	@Column(name = "subscription")
-	public Boolean getSubsciption() {
-		return subsciption;
+	public Boolean getSubscription() {
+		return subscription;
 	}
 
-	public void setSubsciption(Boolean subsciption) {
-		this.subsciption = subsciption;
+	public void setSubscription(Boolean subscription) {
+		this.subscription = subscription;
 	}
 
 	@Column(name = "order_date")
@@ -81,12 +81,12 @@ public class Order {
 	}
 
 	@Column(name = "billing_email")
-	public String getBilingEmail() {
-		return bilingEmail;
+	public String getBillingEmail() {
+		return billingEmail;
 	}
 
-	public void setBilingEmail(String bilingEmail) {
-		this.bilingEmail = bilingEmail;
+	public void setBillingEmail(String billingEmail) {
+		this.billingEmail = billingEmail;
 	}
 
 	@Column(name = "shipping_first_name")
@@ -181,38 +181,60 @@ public class Order {
 		this.orderOwner = orderOwner;
 	}
 
-	@ManyToMany
+	@OneToMany(mappedBy = "order")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinTable(
-		name = "order_product",
-		joinColumns = @JoinColumn(name = "order_id"),
-		inverseJoinColumns = @JoinColumn(name = "product_id")
-	)
-	public List<Product> getProductsIncluded() {
-		return productsIncluded;
+	public List<OrderProduct> getOrderProductInclude() {
+		return orderProductInclude;
 	}
 
-	public void setProductsIncluded(List<Product> productsIncluded) {
-		this.productsIncluded = productsIncluded;
+	public void setOrderProductInclude(List<OrderProduct> orderProductInclude) {
+		this.orderProductInclude = orderProductInclude;
+	}
+	
+	@Transient
+	public List<Product> getProductInclude() {
+		List<Product> res = new ArrayList<>();
+		orderProductInclude.forEach((link) -> res.add(link.getProduct()));
+		return res;
 	}
 	
 	public static Class<?> getClass(int i) {
 		switch(i) {
 		case 0:
 			return Integer.class;
+		case 1:
+			return String.class;
+		case 2:
+			return String.class;
+		case 3:
+			return String.class;
+		case 4:
+			return Boolean.class;
+		case 5:
+			return String.class;
 		default:
 			return null;
 		}
 	}
 	
 	public static String[] getHeaders() {
-		return new String[] {"id"};
+		return new String[] {"id", "orderDate", "shippingFirstName", "shippingLastName", "subscription", "productInclude"};
 	}
 	
 	public Object get(int i) {
 		switch(i) {
 		case 0:
 			return id;
+		case 1:
+			return orderDate.toString();
+		case 2:
+			return shippingFirstName;
+		case 3:
+			return shippingLastName;
+		case 4:
+			return subscription;
+		case 5:
+			return getProductInclude();
 		default:
 			return null;
 		}
@@ -226,10 +248,5 @@ public class Order {
 		default:
 			break;
 		}
-	}
-
-	@Override
-	public String toString() {
-		return null;
 	}
 }

@@ -3,11 +3,9 @@ package com.lecoffretderachel.ordersmanager.dao;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Repository;
 
 import com.lecoffretderachel.ordersmanager.model.Product;
 
-@Repository("productDAO")
 public class ProductDAOImpl implements ProductDAO {
 
 	private SessionFactory sessionFactory;

@@ -16,6 +16,8 @@ import com.lecoffretderachel.ordersmanager.dao.CustomerDAO;
 import com.lecoffretderachel.ordersmanager.dao.CustomerDAOImpl;
 import com.lecoffretderachel.ordersmanager.dao.InventoryDAO;
 import com.lecoffretderachel.ordersmanager.dao.InventoryDAOImpl;
+import com.lecoffretderachel.ordersmanager.dao.OrderDAO;
+import com.lecoffretderachel.ordersmanager.dao.OrderDAOImpl;
 import com.lecoffretderachel.ordersmanager.dao.ProductDAO;
 import com.lecoffretderachel.ordersmanager.dao.ProductDAOImpl;
 import com.lecoffretderachel.ordersmanager.dao.TagDAO;
@@ -23,12 +25,15 @@ import com.lecoffretderachel.ordersmanager.dao.TagDAOImpl;
 import com.lecoffretderachel.ordersmanager.model.Customer;
 import com.lecoffretderachel.ordersmanager.model.Inventory;
 import com.lecoffretderachel.ordersmanager.model.Order;
+import com.lecoffretderachel.ordersmanager.model.OrderProduct;
 import com.lecoffretderachel.ordersmanager.model.Product;
 import com.lecoffretderachel.ordersmanager.model.Tag;
 import com.lecoffretderachel.ordersmanager.service.CustomerService;
 import com.lecoffretderachel.ordersmanager.service.CustomerServiceImpl;
 import com.lecoffretderachel.ordersmanager.service.InventoryService;
 import com.lecoffretderachel.ordersmanager.service.InventoryServiceImpl;
+import com.lecoffretderachel.ordersmanager.service.OrderService;
+import com.lecoffretderachel.ordersmanager.service.OrderServiceImpl;
 import com.lecoffretderachel.ordersmanager.service.ProductService;
 import com.lecoffretderachel.ordersmanager.service.ProductServiceImpl;
 import com.lecoffretderachel.ordersmanager.service.TagService;
@@ -56,6 +61,16 @@ public class DataBaseConfig {
 	@Bean
 	public InventoryDAO getInventoryDAO() {
 		return new InventoryDAOImpl(getSessionFactory());
+	}
+	
+	@Bean
+	public OrderService getOrderService() {
+		return new OrderServiceImpl(getOrderDAO());
+	}
+	
+	@Bean
+	public OrderDAO getOrderDAO() {
+		return new OrderDAOImpl(getSessionFactory());
 	}
 	
 	@Bean
@@ -94,11 +109,12 @@ public class DataBaseConfig {
 	 
 	    LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(getDataSource());
 
-	    sessionBuilder.addAnnotatedClasses(Product.class);
-	    sessionBuilder.addAnnotatedClasses(Tag.class);
-	    sessionBuilder.addAnnotatedClasses(Inventory.class);
-	    sessionBuilder.addAnnotatedClasses(Order.class);
-	    sessionBuilder.addAnnotatedClasses(Customer.class);
+	    sessionBuilder.addAnnotatedClass(Product.class);
+	    sessionBuilder.addAnnotatedClass(Tag.class);
+	    sessionBuilder.addAnnotatedClass(Inventory.class);
+	    sessionBuilder.addAnnotatedClass(Order.class);
+	    sessionBuilder.addAnnotatedClass(Customer.class);
+	    sessionBuilder.addAnnotatedClass(OrderProduct.class);
 	    
 	    Properties prop = new Properties();
 	    prop.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");

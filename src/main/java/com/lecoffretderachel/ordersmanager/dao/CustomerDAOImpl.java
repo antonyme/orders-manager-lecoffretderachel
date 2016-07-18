@@ -3,11 +3,9 @@ package com.lecoffretderachel.ordersmanager.dao;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Repository;
 
 import com.lecoffretderachel.ordersmanager.model.Customer;
 
-@Repository("customerDAO")
 public class CustomerDAOImpl implements CustomerDAO {
 
 	private SessionFactory sessionFactory;

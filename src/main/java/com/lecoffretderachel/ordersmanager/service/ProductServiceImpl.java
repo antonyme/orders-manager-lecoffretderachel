@@ -2,13 +2,11 @@ package com.lecoffretderachel.ordersmanager.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lecoffretderachel.ordersmanager.dao.ProductDAO;
 import com.lecoffretderachel.ordersmanager.model.Product;
 
-@Service("productService")
 public class ProductServiceImpl implements ProductService, ListService {
 
 	ProductDAO productDAO;
