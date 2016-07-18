@@ -9,7 +9,7 @@ import com.lecoffretderachel.ordersmanager.dao.ProductDAO;
 import com.lecoffretderachel.ordersmanager.model.Product;
 
 @Service("productService")
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService, ListService {
 
 	ProductDAO productDAO;
 	

@@ -29,8 +29,8 @@ public class DualListDialog extends JPanel {
 	private static final Insets EMPTY_INSETS = new Insets(0, 0, 0, 0);
 	private static final String ADD_BUTTON_LABEL = "Add >>";
 	private static final String REMOVE_BUTTON_LABEL = "<< Remove";
-	private static final String DEFAULT_SOURCE_CHOICE_LABEL = "Available Tags";
-	private static final String DEFAULT_DEST_CHOICE_LABEL = "Added Tags";
+	private static final String DEFAULT_SOURCE_CHOICE_LABEL = "Available";
+	private static final String DEFAULT_DEST_CHOICE_LABEL = "Added";
 
 	private JLabel sourceLabel;
 	private JList sourceList;
@@ -115,7 +115,7 @@ public class DualListDialog extends JPanel {
 		return destListModel.iterator();
 	}
 	
-	public List getDestinationTags() {
+	public List getDestinationList() {
 		List res = new ArrayList<>();
 		for(int i = 0; i < destListModel.getSize(); i++) {
 			res.add(destListModel.getElementAt(i));

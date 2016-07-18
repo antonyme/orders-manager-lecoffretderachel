@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product")
-public class Product implements java.io.Serializable {
+public class Product implements java.io.Serializable, Comparable {
 	private Integer id;
 	private String name;
 	private List<Tag> tags = new ArrayList<Tag>();
@@ -110,5 +110,10 @@ public class Product implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		return name.compareTo(((Product) o).getName());
 	}
 }

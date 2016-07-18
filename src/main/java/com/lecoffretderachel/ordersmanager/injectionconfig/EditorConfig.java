@@ -39,7 +39,7 @@ public class EditorConfig {
 	
 	@Bean
 	public CustomerView getCustomerView() {
-		return new CustomerView(getDualListEditor());
+		return new CustomerView(getDualListEditorForTags(), getDualListEditorForProducts());
 	}
 	
 	@Bean
@@ -69,7 +69,7 @@ public class EditorConfig {
 	
 	@Bean
 	public ProductView getProductView() {
-		return new ProductView(getDualListEditor());
+		return new ProductView(getDualListEditorForTags());
 	}
 	
 	@Bean
@@ -88,7 +88,12 @@ public class EditorConfig {
 	}
 	
 	@Bean
-	public DualListEditor getDualListEditor() {
+	public DualListEditor getDualListEditorForTags() {
 		return new DualListEditor((ListService) dataBaseConfig.getTagService());
+	}
+	
+	@Bean
+	public DualListEditor getDualListEditorForProducts() {
+		return new DualListEditor((ListService) dataBaseConfig.getProductService());
 	}
 }

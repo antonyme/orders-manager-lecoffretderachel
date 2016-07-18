@@ -174,13 +174,19 @@ public class Customer implements java.io.Serializable {
 			return String.class;
 		case 5:
 			return String.class;
+		case 6:
+			return String.class;
+		case 7:
+			return String.class;
+		case 8:
+			return String.class;
 		default:
 			return null;
 		}
 	}
 	
 	public static String[] getHeaders() {
-		return new String[] {"id", "email", "firstName", "lastName", "note", "tagsIncluded"};
+		return new String[] {"id", "email", "firstName", "lastName", "note", "tagsIncluded", "tagsExcluded", "productsIncluded", "productsExcluded"};
 	}
 	
 	public Object get(int i) {
@@ -198,6 +204,15 @@ public class Customer implements java.io.Serializable {
 		case 5:
 			Collections.sort(tagsIncluded);
 			return tagsIncluded;
+		case 6:
+			Collections.sort(tagsExcluded);
+			return tagsExcluded;
+		case 7:
+			Collections.sort(productsIncluded);
+			return productsIncluded;
+		case 8:
+			Collections.sort(productsExcluded);
+			return productsExcluded;
 		default:
 			return null;
 		}
@@ -222,6 +237,15 @@ public class Customer implements java.io.Serializable {
 			break;
 		case 5:
 			tagsIncluded = (List<Tag>) value;
+			break;
+		case 6:
+			tagsExcluded = (List<Tag>) value;
+			break;
+		case 7:
+			productsIncluded = (List<Product>) value;
+			break;
+		case 8:
+			productsExcluded = (List<Product>) value;
 			break;
 		default:
 			break;

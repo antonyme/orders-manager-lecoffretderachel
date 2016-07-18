@@ -19,9 +19,11 @@ public class CustomerView {
 	JButton btnAddEntry = new JButton("Ajouter");
 	JButton btnDeleteEntry = new JButton("Supprimer");
 	DualListEditor tagEditor;
+	DualListEditor productEditor;
 	
-	public CustomerView(DualListEditor tagEditor) {
+	public CustomerView(DualListEditor tagEditor, DualListEditor productEditor) {
 		this.tagEditor = tagEditor;
+		this.productEditor = productEditor;
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
 		        createGUI();
@@ -72,5 +74,8 @@ public class CustomerView {
 	
 	public void addTagColumnCellEditor() {
 		table.getColumnModel().getColumn(5).setCellEditor(tagEditor);
+		table.getColumnModel().getColumn(6).setCellEditor(tagEditor);
+		table.getColumnModel().getColumn(7).setCellEditor(productEditor);
+		table.getColumnModel().getColumn(8).setCellEditor(productEditor);
 	}
 }

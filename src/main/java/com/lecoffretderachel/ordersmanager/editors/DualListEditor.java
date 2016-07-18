@@ -38,7 +38,7 @@ public class DualListEditor extends AbstractCellEditor
 
 		//Set up the dialog that the button brings up.
 		dualListDialog = new DualListDialog();
-		dialog = DualListDialog.createDialog(button, "Pick tags", dualListDialog, this);
+		dialog = DualListDialog.createDialog(button, "Editor dialog", dualListDialog, this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -56,7 +56,7 @@ public class DualListEditor extends AbstractCellEditor
 
 		} else { //User pressed dialog's "OK" button.
 			currentList.clear();
-			currentList.addAll(dualListDialog.getDestinationTags());
+			currentList.addAll(dualListDialog.getDestinationList());
 			dialog.setVisible(false);
 		}
 	}
