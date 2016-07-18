@@ -9,10 +9,6 @@ import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
-
 import com.lecoffretderachel.ordersmanager.service.ListService;
 
 public class DualListEditor extends AbstractCellEditor

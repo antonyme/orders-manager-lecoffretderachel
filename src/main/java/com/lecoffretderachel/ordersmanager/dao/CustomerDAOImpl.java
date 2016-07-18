@@ -3,15 +3,18 @@ package com.lecoffretderachel.ordersmanager.dao;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.lecoffretderachel.ordersmanager.model.Customer;
 
 @Repository("customerDAO")
 public class CustomerDAOImpl implements CustomerDAO {
-	@Autowired
+
 	private SessionFactory sessionFactory;
+	
+	public CustomerDAOImpl(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	public void persist(Customer customer) {
 		sessionFactory.getCurrentSession().persist(customer);

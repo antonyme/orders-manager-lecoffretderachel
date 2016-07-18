@@ -5,15 +5,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-@Component
 public class InventoryController {
 	final InventoryView theView;
 	final InventoryTableModel theModel;
 	
-	@Autowired
 	public InventoryController(InventoryView theView, InventoryTableModel theModel) {
 		this.theView = theView;
 		this.theModel = theModel;

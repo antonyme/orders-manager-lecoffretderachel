@@ -6,9 +6,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import com.lecoffretderachel.ordersmanager.editors.DualListEditor;
+import com.lecoffretderachel.ordersmanager.editors.inventory.InventoryController;
+import com.lecoffretderachel.ordersmanager.editors.inventory.InventoryTableModel;
+import com.lecoffretderachel.ordersmanager.editors.inventory.InventoryView;
 import com.lecoffretderachel.ordersmanager.editors.product.ProductController;
 import com.lecoffretderachel.ordersmanager.editors.product.ProductTableModel;
 import com.lecoffretderachel.ordersmanager.editors.product.ProductView;
+import com.lecoffretderachel.ordersmanager.editors.tag.TagController;
+import com.lecoffretderachel.ordersmanager.editors.tag.TagTableModel;
+import com.lecoffretderachel.ordersmanager.editors.tag.TagView;
 import com.lecoffretderachel.ordersmanager.service.ListService;
 
 @Configuration
@@ -17,6 +23,36 @@ public class OtherConfig {
 	
 	@Autowired
 	private DataBaseConfig dataBaseConfig;
+	
+	@Bean
+	public InventoryController getInventoryController() {
+		return new InventoryController(getInventoryView(), getInventoryTableModel());
+	}
+	
+	@Bean
+	public InventoryTableModel getInventoryTableModel() {
+		return new InventoryTableModel(dataBaseConfig.getInventoryService(), dataBaseConfig.getProductService());
+	}
+	
+	@Bean
+	public InventoryView getInventoryView() {
+		return new InventoryView();
+	}
+	
+	@Bean
+	public TagController getTagController() {
+		return new TagController(getTagView(), getTagTableModel());
+	}
+	
+	@Bean
+	public TagTableModel getTagTableModel() {
+		return new TagTableModel(dataBaseConfig.getTagService());
+	}
+	
+	@Bean
+	public TagView getTagView() {
+		return new TagView();
+	}
 	
 	@Bean
 	public ProductController getProductController() {

@@ -5,9 +5,6 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.lecoffretderachel.ordersmanager.model.Product;
 import com.lecoffretderachel.ordersmanager.service.ProductService;
 import com.lecoffretderachel.ordersmanager.service.TagService;

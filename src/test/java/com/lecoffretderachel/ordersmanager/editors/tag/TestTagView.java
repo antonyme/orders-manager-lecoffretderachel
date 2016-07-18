@@ -1,14 +1,16 @@
 package com.lecoffretderachel.ordersmanager.editors.tag;
 
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.Lifecycle;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.lecoffretderachel.ordersmanager.injectionconfig.DataBaseConfig;
+import com.lecoffretderachel.ordersmanager.injectionconfig.OtherConfig;
 
 public class TestTagView implements Lifecycle {
-	private static ConfigurableApplicationContext context;
+	private static AnnotationConfigApplicationContext context;
 	
 	public static void main(String[] args) {
-		context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		context = new AnnotationConfigApplicationContext(DataBaseConfig.class, OtherConfig.class);
 		context.registerShutdownHook();
 		context.getBean(TagController.class).show();
 	}

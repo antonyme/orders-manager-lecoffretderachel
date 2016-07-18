@@ -13,9 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class InventoryView {
 	JFrame frame;
 	JTable table;

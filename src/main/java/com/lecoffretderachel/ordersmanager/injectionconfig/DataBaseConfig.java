@@ -6,7 +6,6 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +13,10 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.lecoffretderachel.ordersmanager.dao.CustomerDAO;
+import com.lecoffretderachel.ordersmanager.dao.CustomerDAOImpl;
+import com.lecoffretderachel.ordersmanager.dao.InventoryDAO;
+import com.lecoffretderachel.ordersmanager.dao.InventoryDAOImpl;
 import com.lecoffretderachel.ordersmanager.dao.ProductDAO;
 import com.lecoffretderachel.ordersmanager.dao.ProductDAOImpl;
 import com.lecoffretderachel.ordersmanager.dao.TagDAO;
@@ -23,6 +26,10 @@ import com.lecoffretderachel.ordersmanager.model.Inventory;
 import com.lecoffretderachel.ordersmanager.model.Order;
 import com.lecoffretderachel.ordersmanager.model.Product;
 import com.lecoffretderachel.ordersmanager.model.Tag;
+import com.lecoffretderachel.ordersmanager.service.CustomerService;
+import com.lecoffretderachel.ordersmanager.service.CustomerServiceImpl;
+import com.lecoffretderachel.ordersmanager.service.InventoryService;
+import com.lecoffretderachel.ordersmanager.service.InventoryServiceImpl;
 import com.lecoffretderachel.ordersmanager.service.ProductService;
 import com.lecoffretderachel.ordersmanager.service.ProductServiceImpl;
 import com.lecoffretderachel.ordersmanager.service.TagService;
@@ -32,6 +39,26 @@ import com.lecoffretderachel.ordersmanager.service.TagServiceImpl;
 @ComponentScan("com.lecoffretderachel.ordersmanager")
 @EnableTransactionManagement
 public class DataBaseConfig {
+	
+	@Bean
+	public CustomerService getCustomerService() {
+		return new CustomerServiceImpl(getCustomerDAO());
+	}
+	
+	@Bean
+	public CustomerDAO getCustomerDAO() {
+		return new CustomerDAOImpl(getSessionFactory());
+	}
+	
+	@Bean
+	public InventoryService getInventoryService() {
+		return new InventoryServiceImpl(getInventoryDAO());
+	}
+	
+	@Bean
+	public InventoryDAO getInventoryDAO() {
+		return new InventoryDAOImpl(getSessionFactory());
+	}
 	
 	@Bean
 	public ProductService getProductService() {
@@ -57,7 +84,7 @@ public class DataBaseConfig {
 	public DataSource getDataSource() {
 	    BasicDataSource dataSource = new BasicDataSource();
 	    dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-	    dataSource.setUrl("jdbc:mysql://localhost:3306/order_db?serverTimezone=UTC&amp;useSSL=false");
+	    dataSource.setUrl("jdbc:mysql://localhost:3306/order_db?serverTimezone=UTC&useSSL=false");
 	    dataSource.setUsername("root");
 	    dataSource.setPassword("root");
 	 

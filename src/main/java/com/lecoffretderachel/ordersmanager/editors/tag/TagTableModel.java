@@ -4,19 +4,14 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.lecoffretderachel.ordersmanager.model.Tag;
 import com.lecoffretderachel.ordersmanager.service.TagService;
 
-@Component
 public class TagTableModel extends AbstractTableModel {
 	final TagService tagService;
     String[] columnNames;
     ArrayList data;
 
-    @Autowired
     public TagTableModel(TagService tagService) {
     	this.tagService = tagService;
     	columnNames = new String[] {"id", "name"};

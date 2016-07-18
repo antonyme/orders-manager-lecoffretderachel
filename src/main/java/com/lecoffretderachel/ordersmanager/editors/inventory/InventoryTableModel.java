@@ -5,22 +5,17 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.lecoffretderachel.ordersmanager.model.Inventory;
 import com.lecoffretderachel.ordersmanager.model.Product;
 import com.lecoffretderachel.ordersmanager.service.InventoryService;
 import com.lecoffretderachel.ordersmanager.service.ProductService;
 
-@Component
 public class InventoryTableModel extends AbstractTableModel {
 	final InventoryService inventoryService;
 	final ProductService productService;
     String[] columnNames;
     ArrayList data;
 
-    @Autowired
     public InventoryTableModel(InventoryService inventoryService, ProductService productService) {
     	this.inventoryService = inventoryService;
     	this.productService = productService;

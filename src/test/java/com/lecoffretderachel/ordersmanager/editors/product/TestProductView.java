@@ -1,12 +1,7 @@
 package com.lecoffretderachel.ordersmanager.editors.product;
 
-import javax.print.attribute.standard.MediaSize.Other;
-
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.Lifecycle;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.lecoffretderachel.ordersmanager.injectionconfig.DataBaseConfig;
 import com.lecoffretderachel.ordersmanager.injectionconfig.OtherConfig;
 

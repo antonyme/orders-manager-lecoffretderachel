@@ -12,10 +12,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-
 import com.lecoffretderachel.ordersmanager.editors.DualListEditor;
 
 public class ProductView {
