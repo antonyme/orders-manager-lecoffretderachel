@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import(EditorConfig.class)
+@Import({EditorConfig.class, ImportConfig.class})
 public class AppConfig {
 
 }

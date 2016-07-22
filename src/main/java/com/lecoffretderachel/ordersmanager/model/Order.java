@@ -22,6 +22,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "order_table")
 public class Order {
 	private Integer id;
+	private Integer woocommerceId;
 	private Boolean subscription;
 	private Date orderDate;
 	private String customerNote;
@@ -51,6 +52,14 @@ public class Order {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	@Column(name = "woocommerce_id")
+	public Integer getWoocommerceId() {
+		return woocommerceId;
+	}
+	public void setWoocommerceId(Integer woocommerceId) {
+		this.woocommerceId = woocommerceId;
 	}
 
 	@Column(name = "subscription")
