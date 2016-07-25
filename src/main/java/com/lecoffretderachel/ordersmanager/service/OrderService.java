@@ -10,4 +10,6 @@ public interface OrderService {
 	Order findById(Integer i);
 	void update(Order order);
 	void delete(Order order);
+	
+	Order matchByName(String name);
 }

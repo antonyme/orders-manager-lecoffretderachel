@@ -39,4 +39,18 @@ public class OrderServiceImpl implements OrderService{
 	public void delete(Order order) {
 		orderDAO.delete(order);
 	}
+
+	@Transactional
+	public Order matchByName(String name) {
+		List resultsList = orderDAO.findByName(name);
+		switch(resultsList.size()) {
+		case 0:
+			return null;
+		case 1:
+			return (Order) resultsList.get(0);
+		default:
+			return null;
+		}
+		return null;
+	}
 }
