@@ -1,24 +1,19 @@
 package com.lecoffretderachel.ordersmanager.imports.order;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import com.opencsv.CSVReader;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.HeaderColumnNameMappingStrategy;
 
 public class OrderImportController {
 	OrderImportView theView;
@@ -93,7 +88,10 @@ public class OrderImportController {
 	}
 	
 	private void matchProducts() {
-		
+		Set<String> products = new HashSet();
+		directOrderBuilderList.forEach((orderBuilder) -> orderBuilder.getProductInclude().forEach((item) -> products.add(item.getName())));
+		System.out.println(products);
+		subOrderBuilderList.get(0);
 	}
 	
 	private void matchClients() {

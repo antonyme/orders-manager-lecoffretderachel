@@ -2,18 +2,15 @@ package com.lecoffretderachel.ordersmanager.imports.order;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
 public class OrderImportView {
@@ -99,6 +96,7 @@ public class OrderImportView {
 	
 	public void removeChooseFilePanel() {
 		container.remove(chooseFilePanel);
+		container.repaint();
 	}
 	
 	public void printErrorDialog(String message) {
