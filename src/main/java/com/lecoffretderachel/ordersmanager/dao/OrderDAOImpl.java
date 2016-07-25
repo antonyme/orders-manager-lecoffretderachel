@@ -38,7 +38,8 @@ public class OrderDAOImpl implements OrderDAO {
 	public List findByName(String name) {
 		return sessionFactory.getCurrentSession()
 				.createCriteria(Order.class)
-				.add(Restrictions.like("name", name))
+				.add(Restrictions.eq("name", name))
+//				.add(Restrictions.like("name", name))
 				.list();
 	}
 }

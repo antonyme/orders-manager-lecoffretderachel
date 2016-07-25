@@ -7,9 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.swing.JFileChooser;
@@ -17,17 +15,15 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class OrderImportController {
 	OrderImportView theView;
+	OrderImportModel theModel;
 	
 	int state = 0;
 	String filePath;
 	
-	List<OrderCSV> orderCSVList;
-	List<OrderModelBuilder> subOrderBuilderList;
-	List<OrderModelBuilder> directOrderBuilderList;
 	
-	
-	public OrderImportController(OrderImportView theView) {
+	public OrderImportController(OrderImportView theView, OrderImportModel theModel) {
 		this.theView = theView;
+		this.theModel = theModel;
 		
 		theView.addBtnBrowseListener(new BtnBrowseListener());
 		theView.addBtnNextListener(new BtnNextListener());
@@ -60,38 +56,36 @@ public class OrderImportController {
 	
 	private void openAndReadFile() throws IllegalArgumentException {
 	    try(InputStreamReader fileReader = new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8)) {
-	    	orderCSVList = OrderCSVParser.parseFile(fileReader);
+	    	theModel.setOrderCSVList(OrderCSVParser.parseFile(fileReader));
 	    } catch (IOException e) {
 			throw new IllegalArgumentException("Cannot access file at : " + filePath);
 		}
 	}
 	
 	private void parseExtraInfos() throws IllegalArgumentException {
-		for(OrderCSV orderCSV : orderCSVList) {
+		for(OrderCSV orderCSV : theModel.getOrderCSVList()) {
 			orderCSV.setItemModelList(OrderCSVParser.parseItems(orderCSV));
 		}
 	}
 	
 	private void splitSubAndDirectOrders() {
-		subOrderBuilderList = new ArrayList<>();
-		directOrderBuilderList = new ArrayList<>();
-		for(OrderCSV orderCSV : orderCSVList) {
+		for(OrderCSV orderCSV : theModel.getOrderCSVList()) {
 			OrderModelBuilder subscription = new OrderModelBuilder(orderCSV, true);
 			OrderModelBuilder direct = new OrderModelBuilder(orderCSV, false);
 			if(!subscription.getProductInclude().isEmpty()) {
-				subOrderBuilderList.add(subscription);
+				theModel.getOrderBuilderList(true).add(subscription);
 			}
 			if(!direct.getProductInclude().isEmpty()) {
-				directOrderBuilderList.add(direct);
+				theModel.getOrderBuilderList(false).add(direct);
 			}
 		}
 	}
 	
 	private void matchProducts() {
 		Set<String> products = new HashSet();
-		directOrderBuilderList.forEach((orderBuilder) -> orderBuilder.getProductInclude().forEach((item) -> products.add(item.getName())));
+		theModel.getOrderBuilderList(false).forEach((orderBuilder) -> orderBuilder.getProductInclude().forEach((item) -> products.add(item.getName())));
 		System.out.println(products);
-		subOrderBuilderList.get(0);
+		theModel.getOrderBuilderList(true).get(0);
 	}
 	
 	private void matchClients() {
