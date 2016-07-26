@@ -10,4 +10,7 @@ public interface CustomerDAO {
 	List listAll();
 	void update(Customer customer);
 	void delete(Customer customer);
+	
+	List findByEmail(String email);
+	List findByName(String firstName, String lastName);
 }

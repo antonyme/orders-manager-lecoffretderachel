@@ -85,7 +85,12 @@ public class OrderImportController {
 	}
 	
 	private void matchClients() {
-		
+		try {
+			theModel.matchOrdersClient();
+		}
+		catch(IllegalArgumentException e) {
+			theView.printErrorDialog(e.getMessage());
+		}
 	}
 	
 	class BtnBrowseListener implements ActionListener {

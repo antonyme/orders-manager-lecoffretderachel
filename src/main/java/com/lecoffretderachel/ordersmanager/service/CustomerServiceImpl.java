@@ -39,4 +39,23 @@ public class CustomerServiceImpl implements CustomerService{
 	public void delete(Customer customer) {
 		customerDAO.delete(customer);
 	}
+
+	@Transactional
+	public Customer findByEmail(String email) throws IllegalArgumentException {
+		List resultsList = customerDAO.findByEmail(email);
+		if(resultsList.size() > 1) {
+			throw new IllegalArgumentException("More than one client have the same email : " + email);
+		}
+		else if(resultsList.size() == 1){
+			return (Customer) resultsList.get(0);
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Transactional
+	public List findByName(String firstName, String lastName) {
+		return customerDAO.findByName(firstName, lastName);
+	}
 }

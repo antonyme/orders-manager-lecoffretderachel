@@ -35,14 +35,12 @@ public class Customer implements java.io.Serializable {
 		this.email = "newEmail";
 		this.firstName = "newFirstName";
 		this.lastName = "newLastName";
-		this.note = "newNote";
 	}
 	
-	public Customer(String email, String firstName, String lastName, String note) {
+	public Customer(String email, String firstName, String lastName) {
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.note = note;
 	}
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

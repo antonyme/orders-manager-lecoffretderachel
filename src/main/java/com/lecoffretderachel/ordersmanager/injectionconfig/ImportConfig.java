@@ -27,6 +27,6 @@ public class ImportConfig {
 	
 	@Bean
 	public OrderImportModel getOrderImportModel() {
-		return new OrderImportModel(dataBaseConfig.getProductService());
+		return new OrderImportModel(dataBaseConfig.getProductService(), dataBaseConfig.getCustomerService());
 	}
 }

@@ -10,4 +10,7 @@ public interface CustomerService {
 	Customer findById(Integer i);
 	void update(Customer customer);
 	void delete(Customer customer);
+
+	Customer findByEmail(String email) throws IllegalArgumentException;
+	List findByName(String firstName, String lastName);
 }

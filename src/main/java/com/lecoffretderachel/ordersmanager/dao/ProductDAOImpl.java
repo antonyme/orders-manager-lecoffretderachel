@@ -48,7 +48,6 @@ public class ProductDAOImpl implements ProductDAO {
 		return sessionFactory.getCurrentSession()
 				.createCriteria(Product.class)
 				.add(Restrictions.eq("name", name))
-//				.add(Restrictions.like("name", name))
 				.list();
 	}
 }
