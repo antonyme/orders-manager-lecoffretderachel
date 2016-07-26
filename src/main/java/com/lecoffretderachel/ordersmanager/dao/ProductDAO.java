@@ -11,4 +11,6 @@ public interface ProductDAO {
 	Product findFirst();
 	void update(Product product);
 	void delete(Product product);
+	
+	List findByName(String name);
 }

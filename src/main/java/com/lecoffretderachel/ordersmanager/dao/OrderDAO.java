@@ -10,6 +10,4 @@ public interface OrderDAO {
 	List listAll();
 	void update(Order order);
 	void delete(Order order);
-	
-	List findByName(String name);
 }

@@ -44,4 +44,17 @@ public class ProductServiceImpl implements ProductService, ListService {
 	public void delete(Product product) {
 		productDAO.delete(product);
 	}
+
+	@Transactional
+	public Product matchByName(String name) throws IllegalArgumentException {
+		List resultsList = productDAO.findByName(name);
+		switch(resultsList.size()) {
+		case 0:
+			throw new IllegalArgumentException("No existing product found for : " + name);
+		case 1:
+			return (Product) resultsList.get(0);
+		default:
+			throw new IllegalArgumentException("Multiple products (" + resultsList.size() + ") found for : " + name);
+		}
+	}
 }

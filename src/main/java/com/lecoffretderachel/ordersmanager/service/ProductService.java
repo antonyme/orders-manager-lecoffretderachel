@@ -11,4 +11,6 @@ public interface ProductService {
 	Product findById(Integer i);
 	void update(Product product);
 	void delete(Product product);
+	
+	Product matchByName(String name) throws IllegalArgumentException;
 }

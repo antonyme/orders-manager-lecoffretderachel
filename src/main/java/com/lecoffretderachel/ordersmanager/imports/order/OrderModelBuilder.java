@@ -35,6 +35,10 @@ public class OrderModelBuilder {
 		newOrder.setShippingCountry(orderCSV.getShipping_country());
 	}
 
+	public Order getNewOrder() {
+		return newOrder;
+	}
+	
 	public List<ItemModel> getProductInclude() {
 		return productInclude;
 	}

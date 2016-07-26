@@ -37,5 +37,9 @@ public class ItemModel {
 	public void setIsSubscription(Boolean isSubscription) {
 		this.isSubscription = isSubscription;
 	}
+	@Override
+	public String toString() {
+		return name;
+	}
 	
 }

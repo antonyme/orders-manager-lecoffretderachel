@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import com.lecoffretderachel.ordersmanager.imports.order.OrderImportController;
+import com.lecoffretderachel.ordersmanager.imports.order.OrderImportModel;
 import com.lecoffretderachel.ordersmanager.imports.order.OrderImportView;
 
 @Configuration
@@ -16,11 +17,16 @@ public class ImportConfig {
 	
 	@Bean
 	public OrderImportController getOrderImportController() {
-		return new OrderImportController(getOrderImportView());
+		return new OrderImportController(getOrderImportView(), getOrderImportModel());
 	}
 	
 	@Bean
 	public OrderImportView getOrderImportView() {
 		return new OrderImportView();
+	}
+	
+	@Bean
+	public OrderImportModel getOrderImportModel() {
+		return new OrderImportModel(dataBaseConfig.getProductService());
 	}
 }

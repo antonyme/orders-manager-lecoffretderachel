@@ -7,8 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -82,10 +80,12 @@ public class OrderImportController {
 	}
 	
 	private void matchProducts() {
-		Set<String> products = new HashSet();
-		theModel.getOrderBuilderList(false).forEach((orderBuilder) -> orderBuilder.getProductInclude().forEach((item) -> products.add(item.getName())));
-		System.out.println(products);
-		theModel.getOrderBuilderList(true).get(0);
+		try {
+			theModel.getOrderBuilderList(false).forEach((order) -> theModel.matchOrderProducts(order));
+		}
+		catch(IllegalArgumentException e) {
+			theView.printErrorDialog(e.getMessage());
+		}
 	}
 	
 	private void matchClients() {

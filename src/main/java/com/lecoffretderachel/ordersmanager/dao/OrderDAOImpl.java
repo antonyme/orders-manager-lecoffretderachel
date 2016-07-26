@@ -3,7 +3,6 @@ package com.lecoffretderachel.ordersmanager.dao;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 
 import com.lecoffretderachel.ordersmanager.model.Order;
 
@@ -33,13 +32,5 @@ public class OrderDAOImpl implements OrderDAO {
 	
 	public void delete(Order order) {
 		sessionFactory.getCurrentSession().delete(order);
-	}
-	
-	public List findByName(String name) {
-		return sessionFactory.getCurrentSession()
-				.createCriteria(Order.class)
-				.add(Restrictions.eq("name", name))
-//				.add(Restrictions.like("name", name))
-				.list();
 	}
 }

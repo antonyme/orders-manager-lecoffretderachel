@@ -39,17 +39,4 @@ public class OrderServiceImpl implements OrderService{
 	public void delete(Order order) {
 		orderDAO.delete(order);
 	}
-
-	@Transactional
-	public Order matchByName(String name) throws IllegalArgumentException {
-		List resultsList = orderDAO.findByName(name);
-		switch(resultsList.size()) {
-		case 0:
-			throw new IllegalArgumentException("No existing product found for : " + name);
-		case 1:
-			return (Order) resultsList.get(0);
-		default:
-			throw new IllegalArgumentException("Multiple products (" + resultsList.size() + ") found for : " + name);
-		}
-	}
 }
