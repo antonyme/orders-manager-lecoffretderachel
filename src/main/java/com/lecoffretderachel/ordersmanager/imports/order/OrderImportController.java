@@ -3,11 +3,7 @@ package com.lecoffretderachel.ordersmanager.imports.order;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -53,8 +49,8 @@ public class OrderImportController {
 	}
 	
 	private void openAndReadFile() throws IllegalArgumentException {
-	    try(InputStreamReader fileReader = new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8)) {
-	    	theModel.setOrderCSVList(OrderCSVParser.parseFile(fileReader));
+	    try {
+	    	theModel.setOrderCSVList(OrderCSVParser.parseFile(filePath));
 	    } catch (IOException e) {
 			throw new IllegalArgumentException("Cannot access file at : " + filePath);
 		}
@@ -81,7 +77,7 @@ public class OrderImportController {
 	
 	private void matchProducts() {
 		try {
-			theModel.getOrderBuilderList(false).forEach((order) -> theModel.matchOrderProducts(order));
+			theModel.matchDirectOrdersProducts();
 		}
 		catch(IllegalArgumentException e) {
 			theView.printErrorDialog(e.getMessage());

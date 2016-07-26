@@ -54,18 +54,8 @@ public class OrderCSV {
 	private String shipping_company;
 	@CsvBindByName
 	private String customer_note;
-	@CsvBindByName
-	private String order_item_1;
-	@CsvBindByName
-	private String order_item_2;
-	@CsvBindByName
-	private String order_item_3;
-	@CsvBindByName
-	private String order_item_4;
-	@CsvBindByName
-	private String order_item_5;
-	@CsvBindByName
-	private String order_item_6;
+	
+	private List<String> order_items;
 	
 	private Boolean isSubscription;
 	private List<ItemModel> itemModelList; 
@@ -208,41 +198,11 @@ public class OrderCSV {
 	public void setCustomer_note(String customer_note) {
 		this.customer_note = customer_note;
 	}
-	public String getOrder_item_1() {
-		return order_item_1;
+	public List<String> getOrder_items() {
+		return order_items;
 	}
-	public void setOrder_item_1(String order_item_1) {
-		this.order_item_1 = order_item_1;
-	}
-	public String getOrder_item_2() {
-		return order_item_2;
-	}
-	public void setOrder_item_2(String order_item_2) {
-		this.order_item_2 = order_item_2;
-	}
-	public String getOrder_item_3() {
-		return order_item_3;
-	}
-	public void setOrder_item_3(String order_item_3) {
-		this.order_item_3 = order_item_3;
-	}
-	public String getOrder_item_4() {
-		return order_item_4;
-	}
-	public void setOrder_item_4(String order_item_4) {
-		this.order_item_4 = order_item_4;
-	}
-	public String getOrder_item_5() {
-		return order_item_5;
-	}
-	public void setOrder_item_5(String order_item_5) {
-		this.order_item_5 = order_item_5;
-	}
-	public String getOrder_item_6() {
-		return order_item_6;
-	}
-	public void setOrder_item_6(String order_item_6) {
-		this.order_item_6 = order_item_6;
+	public void setOrder_items(List<String> order_items) {
+		this.order_items = order_items;
 	}
 	public Boolean getIsSubscription() {
 		return isSubscription;

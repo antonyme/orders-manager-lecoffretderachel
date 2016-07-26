@@ -1,8 +1,15 @@
 package com.lecoffretderachel.ordersmanager.imports.order;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
@@ -10,25 +17,54 @@ import com.opencsv.bean.HeaderColumnNameMappingStrategy;
 
 public class OrderCSVParser {
 	
-	public static List<OrderCSV> parseFile(InputStreamReader fileReader) {
-	    HeaderColumnNameMappingStrategy<OrderCSV> strategy = new HeaderColumnNameMappingStrategy<>();
+	public static List<OrderCSV> parseFile(String filePath) throws FileNotFoundException {
+		InputStreamReader fileReader1 = new InputStreamReader(
+				new FileInputStream(filePath), StandardCharsets.UTF_8
+		);
+		InputStreamReader fileReader2 = new InputStreamReader(
+				new FileInputStream(filePath), StandardCharsets.UTF_8
+		);
+		
+		// fill order bean
+		HeaderColumnNameMappingStrategy<OrderCSV> strategy = new HeaderColumnNameMappingStrategy<>();
 	    strategy.setType(OrderCSV.class);
 	    CsvToBean<OrderCSV> csvToBean = new CsvToBean<>();
-    	return csvToBean.parse(strategy, new CSVReader(fileReader));
+	    List<OrderCSV> res = csvToBean.parse(strategy, new CSVReader(fileReader1));
+	    
+	    // add items to order bean
+	    try (CSVReader reader = new CSVReader(fileReader2)) {
+			Map<String, Integer> itemRange = getItemsRange(reader.readNext());
+			String[] nextLine;
+			int line = 0;
+			while((nextLine = reader.readNext()) != null) {
+				res.get(line).setOrder_items(
+						Arrays.asList(nextLine)
+						.subList(itemRange.get("first"), itemRange.get("last"))
+				);
+				line++;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return res;
+	}
+	
+	public static Map<String, Integer> getItemsRange(String[] headers) {
+		Map<String, Integer> res = new HashMap<>();
+		Integer first = Arrays.asList(headers).indexOf("order_item_1");
+		Integer last;
+		for(last = first; headers[last].contains("order_item"); last++);
+		last--;
+		res.put("first", first);
+		res.put("last", last);
+		return res;
 	}
 	
 	public static List<ItemModel> parseItems(OrderCSV orderCSV) throws IllegalArgumentException {
-		List<String> itemCSVList = new ArrayList<>();
 		List<ItemModel> itemModelList = new ArrayList<>();
-		itemCSVList.add(orderCSV.getOrder_item_1());
-		itemCSVList.add(orderCSV.getOrder_item_2());
-		itemCSVList.add(orderCSV.getOrder_item_3());
-		itemCSVList.add(orderCSV.getOrder_item_4());
-		itemCSVList.add(orderCSV.getOrder_item_5());
-		itemCSVList.add(orderCSV.getOrder_item_6());
-		itemCSVList.forEach((item) -> 
+		orderCSV.getOrder_items().forEach((item) -> 
 		{
-			if(item != null) itemModelList.add(parseItem(item));
+			if(item != null && !item.equals("")) itemModelList.add(parseItem(item));
 		});
 		return itemModelList;
 	}
