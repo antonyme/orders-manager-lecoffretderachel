@@ -1,6 +1,7 @@
 package com.lecoffretderachel.ordersmanager.editors.tag;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -10,7 +11,7 @@ import com.lecoffretderachel.ordersmanager.service.TagService;
 public class TagTableModel extends AbstractTableModel {
 	final TagService tagService;
     String[] columnNames;
-    ArrayList data;
+    List data = new ArrayList<>();
 
     public TagTableModel(TagService tagService) {
     	this.tagService = tagService;
@@ -54,7 +55,7 @@ public class TagTableModel extends AbstractTableModel {
     }
     
     public void fillData() {
-    	data = new ArrayList(tagService.list());
+    	data.addAll(tagService.list());
     }
     
     public void addEmptyRow() {

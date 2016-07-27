@@ -7,18 +7,24 @@ import com.lecoffretderachel.ordersmanager.model.Customer;
 import com.lecoffretderachel.ordersmanager.model.OrderProduct;
 import com.lecoffretderachel.ordersmanager.model.Product;
 import com.lecoffretderachel.ordersmanager.service.CustomerService;
+import com.lecoffretderachel.ordersmanager.service.InventoryService;
+import com.lecoffretderachel.ordersmanager.service.OrderService;
 import com.lecoffretderachel.ordersmanager.service.ProductService;
 
 public class OrderImportModel {
 	ProductService productService;
 	CustomerService customerService;
+	OrderService orderService;
+	InventoryService inventoryService;
 	List<OrderCSV> orderCSVList;
 	List<OrderModelBuilder> subOrderBuilderList = new ArrayList<>();
 	List<OrderModelBuilder> directOrderBuilderList = new ArrayList<>();
 	
-	public OrderImportModel(ProductService productService, CustomerService customerService) {
+	public OrderImportModel(ProductService productService, CustomerService customerService, OrderService orderService, InventoryService inventoryService) {
 		this.productService = productService;
 		this.customerService = customerService;
+		this.orderService = orderService;
+		this.inventoryService = inventoryService;
 	}
 	
 	public List<OrderCSV> getOrderCSVList() {
@@ -84,6 +90,13 @@ public class OrderImportModel {
 				customerService.persist(newCustomer);
 				order.getNewOrder().setOrderOwner(newCustomer);
 			}
+		}
+	}
+	
+	public void persistDirectOrders() {
+		for(OrderModelBuilder order : directOrderBuilderList) {
+			
+			orderService.persist(order.getNewOrder());
 		}
 	}
 }

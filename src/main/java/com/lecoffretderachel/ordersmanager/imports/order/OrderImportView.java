@@ -2,6 +2,7 @@ package com.lecoffretderachel.ordersmanager.imports.order;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
@@ -10,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -20,6 +23,8 @@ public class OrderImportView {
 	JPanel chooseFilePanel = new JPanel();
 	JTextField pathField;
 	JButton btnBrowse;
+	JPanel directOrdersPanel = new JPanel();
+	JTable table = new JTable();
 	
 	public OrderImportView() {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -74,6 +79,7 @@ public class OrderImportView {
 		bottomPanel.add(btnNext);
 		
 		createChooseFilePanel();
+		createDirectOrdersPanel();
 	}
 	
 	public void createChooseFilePanel() {
@@ -96,6 +102,28 @@ public class OrderImportView {
 	
 	public void removeChooseFilePanel() {
 		container.remove(chooseFilePanel);
+		container.repaint();
+	}
+	
+	public void createDirectOrdersPanel() {
+		table.setFont(new Font("", 0, 16));
+		table.setRowHeight(30);
+		JScrollPane tablePane = new JScrollPane(table);
+		tablePane.setBounds(0, 0, 880, 200);
+		tablePane.setPreferredSize(tablePane.getSize());
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLayout(new BorderLayout());
+		frame.add(tablePane, BorderLayout.CENTER);
+        frame.pack();
+	}
+	
+	public void addDirectOrdersPanel() {
+		container.add(directOrdersPanel, BorderLayout.NORTH);
+	}
+	
+	public void removeDirectOrdersPanel() {
+		container.remove(directOrdersPanel);
 		container.repaint();
 	}
 	

@@ -47,8 +47,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public List findByName(String firstName, String lastName) {
 		return sessionFactory.getCurrentSession()
 				.createCriteria(Customer.class)
-				.add(Restrictions.eq("first_name", firstName))
-				.add(Restrictions.eq("last_name", lastName))
+				.add(Restrictions.eq("firstName", firstName))
+				.add(Restrictions.eq("lastName", lastName))
 				.list();
 	}
 }

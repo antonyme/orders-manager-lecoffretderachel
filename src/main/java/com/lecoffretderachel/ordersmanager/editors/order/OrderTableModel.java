@@ -1,6 +1,7 @@
 package com.lecoffretderachel.ordersmanager.editors.order;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -10,7 +11,7 @@ import com.lecoffretderachel.ordersmanager.service.OrderService;
 public class OrderTableModel extends AbstractTableModel {
 	final OrderService orderService;
     String[] columnNames;
-    ArrayList data;
+    List data = new ArrayList<>();
 
     public OrderTableModel(OrderService orderService) {
     	this.orderService = orderService;
@@ -54,7 +55,7 @@ public class OrderTableModel extends AbstractTableModel {
     }
     
     public void fillData() {
-    	data = new ArrayList(orderService.list());
+    	data.addAll(orderService.list());
     }
     
     public void addEmptyRow() {

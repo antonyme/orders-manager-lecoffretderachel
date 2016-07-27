@@ -14,7 +14,7 @@ public class InventoryTableModel extends AbstractTableModel {
 	final InventoryService inventoryService;
 	final ProductService productService;
     String[] columnNames;
-    ArrayList data;
+    List data = new ArrayList<>();
 
     public InventoryTableModel(InventoryService inventoryService, ProductService productService) {
     	this.inventoryService = inventoryService;
@@ -59,7 +59,7 @@ public class InventoryTableModel extends AbstractTableModel {
     }
     
     public void fillData() {
-    	data = new ArrayList(inventoryService.list());
+    	data.addAll(inventoryService.list());
     }
     
     public void addEmptyRow() {

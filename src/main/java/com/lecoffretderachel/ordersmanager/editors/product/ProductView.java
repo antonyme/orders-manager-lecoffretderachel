@@ -14,8 +14,8 @@ import javax.swing.table.AbstractTableModel;
 import com.lecoffretderachel.ordersmanager.editors.DualListEditor;
 
 public class ProductView {
-	JFrame frame;
-	JTable table;
+	JFrame frame = new JFrame();
+	JTable table = new JTable();
 	JButton btnAddEntry = new JButton("Ajouter");
 	JButton btnDeleteEntry = new JButton("Supprimer");
 	DualListEditor tagEditor;
@@ -30,9 +30,6 @@ public class ProductView {
 	}
 	
     private void createGUI() {
-		frame = new JFrame();
-		table = new JTable();
-		
 		table.setFont(new Font("", 0, 16));
 		table.setRowHeight(30);
 		JScrollPane tablePane = new JScrollPane(table);

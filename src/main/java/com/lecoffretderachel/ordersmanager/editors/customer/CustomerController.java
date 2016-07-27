@@ -11,7 +11,6 @@ public class CustomerController {
 		this.theView = theView;
 		this.theModel = theModel;
 
-		theModel.fillData();
 		theView.injectModelIntoTable(theModel);
 		theView.addBtnAddEntryListener(new BtnAddEntryListener());
 		theView.addBtnDeleteEntryListener(new BtnDeleteEntryListener());
@@ -19,6 +18,7 @@ public class CustomerController {
 	}
 	
 	public void show() {
+		theModel.fillData();
 		theView.showGUI();
 	}
 	

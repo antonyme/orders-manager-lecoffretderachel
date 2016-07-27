@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -192,6 +194,7 @@ public class Order {
 
 	@OneToMany(mappedBy = "order")
 	@LazyCollection(LazyCollectionOption.FALSE)
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	public List<OrderProduct> getOrderProductInclude() {
 		return orderProductInclude;
 	}

@@ -14,10 +14,10 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 public class InventoryView {
-	JFrame frame;
-	JTable table;
-	JButton btnAddEntry;
-	JButton btnDeleteEntry;
+	JFrame frame = new JFrame();
+	JTable table = new JTable();
+	JButton btnAddEntry = new JButton("Ajouter");
+	JButton btnDeleteEntry = new JButton("Supprimer");
 	
 	public InventoryView() {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -28,17 +28,12 @@ public class InventoryView {
 	}
 	
     private void createGUI() {
-		frame = new JFrame();
-		table = new JTable();
-		
 		table.setFont(new Font("", 0, 16));
 		table.setRowHeight(30);
 		JScrollPane tablePane = new JScrollPane(table);
 		tablePane.setBounds(0, 0, 880, 200);
 		tablePane.setPreferredSize(tablePane.getSize());
 		
-		btnAddEntry = new JButton("Ajouter");
-		btnDeleteEntry = new JButton("Supprimer");
 		JPanel btnPane = new JPanel();
 		btnPane.add(btnAddEntry);
 		btnPane.add(btnDeleteEntry);

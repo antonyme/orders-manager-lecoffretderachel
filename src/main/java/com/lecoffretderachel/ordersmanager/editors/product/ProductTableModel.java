@@ -14,7 +14,7 @@ public class ProductTableModel extends AbstractTableModel {
 	final ProductService productService;
 	final TagService tagService;
     String[] columnNames;
-    ArrayList data;
+    List data = new ArrayList<>();
 
     public ProductTableModel(ProductService productService, TagService tagService) {
     	this.productService = productService;
@@ -59,7 +59,7 @@ public class ProductTableModel extends AbstractTableModel {
     }
     
     public void fillData() {
-    	data = new ArrayList(productService.list());
+    	data.addAll(productService.list());
     }
     
     public void addEmptyRow() {

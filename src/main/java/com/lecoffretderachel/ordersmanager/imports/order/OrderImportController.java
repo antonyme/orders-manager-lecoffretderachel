@@ -93,6 +93,10 @@ public class OrderImportController {
 		}
 	}
 	
+	private void persistDirectOrders() {
+		
+	}
+	
 	class BtnBrowseListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -123,6 +127,7 @@ public class OrderImportController {
 				state = 2;
 				theView.setBtnNextState(false);
 				theView.removeChooseFilePanel();
+				theView.addDirectOrdersPanel();
 				break;
 			case 2:
 				break;

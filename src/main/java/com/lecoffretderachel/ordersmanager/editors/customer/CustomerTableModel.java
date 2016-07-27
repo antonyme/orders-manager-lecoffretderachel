@@ -14,7 +14,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	final CustomerService customerService;
 	final TagService tagService;
     String[] columnNames;
-    ArrayList data;
+    List data = new ArrayList<>();
 
     public CustomerTableModel(CustomerService customerService, TagService tagService) {
     	this.customerService = customerService;
@@ -59,7 +59,7 @@ public class CustomerTableModel extends AbstractTableModel {
     }
     
     public void fillData() {
-    	data = new ArrayList(customerService.list());
+    	data.addAll(customerService.list());
     }
     
     public void addEmptyRow() {

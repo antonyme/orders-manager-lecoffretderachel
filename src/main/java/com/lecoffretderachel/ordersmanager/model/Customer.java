@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -150,6 +152,7 @@ public class Customer implements java.io.Serializable {
 
 	@OneToMany(mappedBy = "orderOwner")
 	@LazyCollection(LazyCollectionOption.FALSE)
+	@Cascade({CascadeType.DELETE})
 	public List<Order> getOrders() {
 		return orders;
 	}
