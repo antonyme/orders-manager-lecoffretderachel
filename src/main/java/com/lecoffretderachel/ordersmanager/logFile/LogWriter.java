@@ -15,11 +15,10 @@ public class LogWriter {
 			+ File.separator + "GUILLAUME"
 			+ File.separator + "Google Drive"
 			+ File.separator + "Rachel"
-			+ File.separator + "CSV import"
-			+ File.separator + "log";
+			+ File.separator + "logs";
 	
-	public LogWriter(String fileName, List<String[]> toLog) {
-		String filePath = LOCATION + File.separator + fileName;
+	public static void write(String fileName, List<String[]> toLog) {
+		String filePath = LOCATION + File.separator + fileName + ".csv";
 		try (
 				CSVWriter writer = new CSVWriter(new OutputStreamWriter(new FileOutputStream(filePath), StandardCharsets.UTF_8))
 		) {

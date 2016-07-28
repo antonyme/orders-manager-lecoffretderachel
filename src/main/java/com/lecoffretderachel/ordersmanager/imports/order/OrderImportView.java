@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 
 public class OrderImportView {
 	JFrame frame = new JFrame();
@@ -23,8 +26,8 @@ public class OrderImportView {
 	JPanel chooseFilePanel = new JPanel();
 	JTextField pathField;
 	JButton btnBrowse;
-	JPanel directOrdersPanel = new JPanel();
 	JTable table = new JTable();
+	JScrollPane subOrdersPanel = new JScrollPane(table);
 	
 	public OrderImportView() {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -79,7 +82,7 @@ public class OrderImportView {
 		bottomPanel.add(btnNext);
 		
 		createChooseFilePanel();
-		createDirectOrdersPanel();
+		createSubOrdersPanel();
 	}
 	
 	public void createChooseFilePanel() {
@@ -105,25 +108,32 @@ public class OrderImportView {
 		container.repaint();
 	}
 	
-	public void createDirectOrdersPanel() {
+	public void createSubOrdersPanel() {
 		table.setFont(new Font("", 0, 16));
 		table.setRowHeight(30);
-		JScrollPane tablePane = new JScrollPane(table);
-		tablePane.setBounds(0, 0, 880, 200);
-		tablePane.setPreferredSize(tablePane.getSize());
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(new BorderLayout());
-		frame.add(tablePane, BorderLayout.CENTER);
-        frame.pack();
+		subOrdersPanel.setBounds(0, 0, 880, 200);
+		subOrdersPanel.setPreferredSize(subOrdersPanel.getSize());
 	}
 	
-	public void addDirectOrdersPanel() {
-		container.add(directOrdersPanel, BorderLayout.NORTH);
+	public void addSubOrdersPanel(List subOrders, int maxItemCount) {
+		table.setModel(new SubOrderTableModel(subOrders, maxItemCount));
+		container.add(subOrdersPanel, BorderLayout.NORTH);
 	}
 	
-	public void removeDirectOrdersPanel() {
-		container.remove(directOrdersPanel);
+	public void addSubOrdersProductEditor(TableCellEditor editor) {
+		for(int i = 2; i < table.getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setCellEditor(editor);
+		}
+	}
+	
+	public void addSubOrdersProductRenderer(TableCellRenderer renderer) {
+		for(int i = 2; i < table.getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setCellRenderer(renderer);
+		}
+	}
+	
+	public void removeSubOrdersPanel() {
+		container.remove(subOrdersPanel);
 		container.repaint();
 	}
 	

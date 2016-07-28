@@ -1,15 +1,21 @@
 package com.lecoffretderachel.ordersmanager.imports.order;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import com.lecoffretderachel.ordersmanager.logFile.LogWriter;
+import com.lecoffretderachel.ordersmanager.logFile.Util;
 import com.lecoffretderachel.ordersmanager.model.Customer;
+import com.lecoffretderachel.ordersmanager.model.Inventory;
+import com.lecoffretderachel.ordersmanager.model.Order;
 import com.lecoffretderachel.ordersmanager.model.OrderProduct;
 import com.lecoffretderachel.ordersmanager.model.Product;
 import com.lecoffretderachel.ordersmanager.service.CustomerService;
 import com.lecoffretderachel.ordersmanager.service.InventoryService;
 import com.lecoffretderachel.ordersmanager.service.OrderService;
 import com.lecoffretderachel.ordersmanager.service.ProductService;
+import com.lecoffretderachel.ordersmanager.subscription.ProductChooser;
 
 public class OrderImportModel {
 	ProductService productService;
@@ -19,6 +25,9 @@ public class OrderImportModel {
 	List<OrderCSV> orderCSVList;
 	List<OrderModelBuilder> subOrderBuilderList = new ArrayList<>();
 	List<OrderModelBuilder> directOrderBuilderList = new ArrayList<>();
+	List<Order> subOrderList = new ArrayList<>();
+	List<String[]> refusedProduct = new ArrayList<>();
+	List<String[]> addedDirectProduct = new ArrayList<>();
 	
 	public OrderImportModel(ProductService productService, CustomerService customerService, OrderService orderService, InventoryService inventoryService) {
 		this.productService = productService;
@@ -41,6 +50,33 @@ public class OrderImportModel {
 		else {
 			return directOrderBuilderList;
 		}
+	}
+	
+	public List<Order> getSubOrderList() {
+		List<Order> res = new ArrayList<>();
+		subOrderBuilderList.forEach((order) -> res.add(order.getNewOrder()));
+		return res;
+	}
+	
+	public int getSubOrderMaxItemCount() {
+		List<Integer> sizes = new ArrayList<>();
+		subOrderBuilderList.forEach((order) -> sizes.add(order.getNewOrder().getOrderProductInclude().size()));
+		return Collections.max(sizes);
+	}
+	
+	public List<OrderProduct> getPossibleOrderProduct() {
+		List<OrderProduct> res = new ArrayList<>();
+		List<Inventory> inventories = inventoryService.list();
+		for(Inventory inventory : inventories) {
+			if(inventory.getQuantity() > 0) {
+				OrderProduct toAdd = new OrderProduct();
+				toAdd.setProduct(inventory.getProduct());
+				toAdd.setProductSize(inventory.getProductSize());
+				toAdd.setQuantity(1);
+				res.add(toAdd);
+			}
+		}
+		return res;
 	}
 	
 	public void matchDirectOrdersProducts() throws IllegalArgumentException {
@@ -95,8 +131,30 @@ public class OrderImportModel {
 	
 	public void persistDirectOrders() {
 		for(OrderModelBuilder order : directOrderBuilderList) {
-			
+			List<OrderProduct> toRemoveFromOrder = new ArrayList<>();
+			for(OrderProduct productInclude : order.getNewOrder().getOrderProductInclude()) {
+				if(!inventoryService.removeFromInventory(productInclude)) {
+					refusedProduct.add(
+							Util.orderProductToString(order.getNewOrder(), productInclude));
+				}
+				else {
+					addedDirectProduct.add(
+							Util.orderProductToString(order.getNewOrder(), productInclude));
+				}
+			}
+			order.getNewOrder().getOrderProductInclude().removeAll(toRemoveFromOrder);
 			orderService.persist(order.getNewOrder());
 		}
+	}
+	
+	public void suggestSubOrderProducts() {
+		subOrderBuilderList.forEach((order) -> subOrderList.add(order.getNewOrder()));
+		ProductChooser chooser = new ProductChooser(subOrderList, inventoryService.list());
+		subOrderList = chooser.getResult();
+	}
+	
+	public void writeLogs() {
+		LogWriter.write("refused products", refusedProduct);
+		LogWriter.write("added direct", addedDirectProduct);
 	}
 }

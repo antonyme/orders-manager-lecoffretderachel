@@ -17,6 +17,8 @@ import com.opencsv.bean.HeaderColumnNameMappingStrategy;
 
 public class OrderCSVParser {
 	
+	public static List<String> SIZES = Arrays.asList("S", "M", "L", "XL");
+	
 	public static List<OrderCSV> parseFile(String filePath) throws FileNotFoundException {
 		InputStreamReader fileReader1 = new InputStreamReader(
 				new FileInputStream(filePath), StandardCharsets.UTF_8
@@ -104,16 +106,15 @@ public class OrderCSVParser {
 			res.setName(splitItem[0]);
 			res.setQuantity(parseQuantity(itemCSV, splitItem[1]));
 			res.setPrice(parsePrice(itemCSV, splitItem[2]));
+			res.setSize("M");
 		}
-		//Recu en cadeau|1|57|Size: S|Durée de l'abonnement offert: 2 mois -> faire un produit
-		else if(splitItem[0].equalsIgnoreCase("Recu en cadeau") && splitItem.length >= 3) {
+		//Recu en cadeau|1|57|Size: S|Durée de l'abonnement offert: 2 mois
+		else if(splitItem[0].equalsIgnoreCase("Recu en cadeau") && splitItem.length > 3) {
 			res.setIsSubscription(true);
 			res.setName(splitItem[0]);
 			res.setQuantity(parseQuantity(itemCSV, splitItem[1]));
 			res.setPrice(parsePrice(itemCSV, splitItem[2]));
-			if(splitItem.length > 3) {
-				res.setSize(parseSize(itemCSV, splitItem[3]));
-			}
+			res.setSize(parseSize(itemCSV, splitItem[3]));
 		}
 		//pois1|1|14.45|Size: M
 		else if(splitItem.length == 4) {
@@ -153,7 +154,22 @@ public class OrderCSVParser {
 	private static String parseSize(String itemCSV, String toParse) throws IllegalArgumentException {
 		String[] splitSize = toParse.split(": ");
 		if(splitSize.length == 2) {
-			return splitSize[1];
+			String size = splitSize[1].toUpperCase();
+			if(size.equalsIgnoreCase("taille unique")) return "TU";
+			if(size.equalsIgnoreCase("p")) return "S";
+			if(size.equalsIgnoreCase("small")) return "S";
+			if(size.equalsIgnoreCase("s-en")) return "S";
+			if(size.equalsIgnoreCase("medium")) return "M";
+			if(size.equalsIgnoreCase("m-en")) return "M";
+			if(size.equalsIgnoreCase("large")) return "L";
+			if(size.equalsIgnoreCase("l-en")) return "L";
+			if(SIZES.contains(size)) {
+				return size;
+			}
+			else {
+				throw new IllegalArgumentException("In item : " + itemCSV + ", size : " + size
+						+ ", isn't valid");
+			}
 		}
 		else {
 			throw new IllegalArgumentException("In item : " + itemCSV + ", size : " + toParse

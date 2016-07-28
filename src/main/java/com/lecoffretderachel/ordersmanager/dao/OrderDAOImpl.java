@@ -3,7 +3,9 @@ package com.lecoffretderachel.ordersmanager.dao;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 
+import com.lecoffretderachel.ordersmanager.model.Customer;
 import com.lecoffretderachel.ordersmanager.model.Order;
 
 public class OrderDAOImpl implements OrderDAO {
@@ -32,5 +34,12 @@ public class OrderDAOImpl implements OrderDAO {
 	
 	public void delete(Order order) {
 		sessionFactory.getCurrentSession().delete(order);
+	}
+	
+	public List findByCustomer(Customer customer) {
+		return sessionFactory.getCurrentSession()
+				.createCriteria(Order.class)
+				.add(Restrictions.eq("orderOwner", customer))
+				.list();
 	}
 }

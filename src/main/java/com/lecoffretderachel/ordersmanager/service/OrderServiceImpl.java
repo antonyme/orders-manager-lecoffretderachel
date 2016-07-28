@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lecoffretderachel.ordersmanager.dao.OrderDAO;
+import com.lecoffretderachel.ordersmanager.model.Customer;
 import com.lecoffretderachel.ordersmanager.model.Order;
 
 public class OrderServiceImpl implements OrderService{
@@ -38,5 +39,10 @@ public class OrderServiceImpl implements OrderService{
 	@Transactional
 	public void delete(Order order) {
 		orderDAO.delete(order);
+	}
+	
+	@Transactional
+	public List findByCustomer(Customer customer) {
+		return orderDAO.findByCustomer(customer);
 	}
 }

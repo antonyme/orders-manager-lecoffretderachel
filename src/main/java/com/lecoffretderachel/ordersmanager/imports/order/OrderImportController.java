@@ -4,8 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
+
+import com.lecoffretderachel.ordersmanager.model.OrderProduct;
 
 public class OrderImportController {
 	OrderImportView theView;
@@ -93,10 +99,6 @@ public class OrderImportController {
 		}
 	}
 	
-	private void persistDirectOrders() {
-		
-	}
-	
 	class BtnBrowseListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -119,6 +121,9 @@ public class OrderImportController {
 					splitSubAndDirectOrders();
 					matchProducts();
 					matchClients();
+					theModel.persistDirectOrders();
+					theModel.suggestSubOrderProducts();
+					theModel.writeLogs();
 				}
 				catch(IllegalArgumentException ex) {
 					theView.printErrorDialog(ex.getMessage());
@@ -127,13 +132,29 @@ public class OrderImportController {
 				state = 2;
 				theView.setBtnNextState(false);
 				theView.removeChooseFilePanel();
-				theView.addDirectOrdersPanel();
+				theView.addSubOrdersPanel(theModel.getSubOrderList(), theModel.getSubOrderMaxItemCount());
+				theView.addSubOrdersProductEditor(
+						new DefaultCellEditor(
+								new JComboBox<>(theModel.getPossibleOrderProduct().toArray())));
+				theView.addSubOrdersProductRenderer(new SubOrdersProductRenderer());
 				break;
 			case 2:
 				break;
 			default:
 				break;
 			}
+		}
+	}
+	
+	class SubOrdersProductRenderer extends DefaultTableCellRenderer {
+		public SubOrdersProductRenderer() {
+			super();
+		}
+		
+		@Override
+		public void setValue(Object value) {
+			OrderProduct elem = (OrderProduct) value;
+			setText(elem.getProduct().getName() + " (" + elem.getProductSize() + ")");
 		}
 	}
 }

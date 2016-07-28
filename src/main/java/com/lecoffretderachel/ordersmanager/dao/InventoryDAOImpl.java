@@ -37,10 +37,16 @@ public class InventoryDAOImpl implements InventoryDAO {
 	}
 
 	public Inventory findByProductAndSize(Product product, String size) {
-		return (Inventory) sessionFactory.getCurrentSession()
+		List list = sessionFactory.getCurrentSession()
 				.createCriteria(Inventory.class)
 				.add(Restrictions.eq("product", product))
 				.add(Restrictions.eq("productSize", size))
-				.list().get(0);
+				.list();
+		if(list.isEmpty()) {
+			return null;
+		}
+		else {
+			return (Inventory) list.get(0);
+		}
 	}
 }

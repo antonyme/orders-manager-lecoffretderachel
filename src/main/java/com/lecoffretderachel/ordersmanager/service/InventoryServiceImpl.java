@@ -50,7 +50,7 @@ public class InventoryServiceImpl implements InventoryService{
 	@Transactional
 	public Boolean removeFromInventory(OrderProduct toRemove) {
 		Inventory entry = inventoryDAO.findByProductAndSize(toRemove.getProduct(), toRemove.getProductSize());
-		if(entry.getQuantity() < toRemove.getQuantity()) {
+		if(entry == null || entry.getQuantity() < toRemove.getQuantity()) {
 			return false;
 		}
 		else {
