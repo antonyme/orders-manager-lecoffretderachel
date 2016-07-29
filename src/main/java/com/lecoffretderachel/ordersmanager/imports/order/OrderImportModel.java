@@ -148,8 +148,7 @@ public class OrderImportModel {
 	}
 	
 	public void suggestSubOrderProducts() {
-		subOrderBuilderList.forEach((order) -> subOrderList.add(order.getNewOrder()));
-		ProductChooser chooser = new ProductChooser(subOrderList, inventoryService.list());
+		ProductChooser chooser = new ProductChooser(subOrderBuilderList, inventoryService.list());
 		subOrderList = chooser.getResult();
 	}
 	
