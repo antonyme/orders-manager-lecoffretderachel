@@ -126,6 +126,7 @@ public class OrderImportController {
 					theModel.writeLogs();
 				}
 				catch(IllegalArgumentException ex) {
+					ex.printStackTrace();
 					theView.printErrorDialog(ex.getMessage());
 					break;
 				}
@@ -153,8 +154,13 @@ public class OrderImportController {
 		
 		@Override
 		public void setValue(Object value) {
-			OrderProduct elem = (OrderProduct) value;
-			setText(elem.getProduct().getName() + " (" + elem.getProductSize() + ")");
+			if(value == null) {
+				setText("");
+			}
+			else {
+				OrderProduct elem = (OrderProduct) value;
+				setText(elem.getProduct().getName() + " (" + elem.getProductSize() + ")");	
+			}
 		}
 	}
 }

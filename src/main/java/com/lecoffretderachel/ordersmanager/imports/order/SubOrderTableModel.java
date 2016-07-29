@@ -56,7 +56,11 @@ public class SubOrderTableModel extends AbstractTableModel {
         case 1:
         	return value.getShippingLastName();
         default:
-        	return value.getOrderProductInclude().get(col - 2);
+        	if(value.getOrderProductInclude().size() > col - 2) {
+        		return value.getOrderProductInclude().get(col - 2);
+        	}
+        	else
+        		return null;
         }
     }
     

@@ -15,7 +15,7 @@ public class ProductChooser {
 	List<OrderModelBuilder> toFill;
 	List<Inventory> currentInventory;
 	Integer totalInventory;
-	List<Inventory> pool;
+	List<Inventory> pool = new ArrayList<>();
 	Integer poolSize;
 	Random rand = new Random();
 	
@@ -30,11 +30,16 @@ public class ProductChooser {
 		for(OrderModelBuilder order : toFill) {
 			for(int i = 0; i < 2; i++) {
 				createPool(order);
-				int choosen = getRandomly();
-				order.getNewOrder().getOrderProductInclude()
-				.add(getOrderProdFromInventory(order, currentInventory.get(choosen)));
-				currentInventory.get(choosen)
-				.setQuantity(currentInventory.get(choosen).getQuantity() - 1);
+				if(poolSize == 0) {
+					order.getNewOrder().getOrderProductInclude().add(null);
+				}
+				else {
+					int choosen = getRandomly();
+					order.getNewOrder().getOrderProductInclude()
+					.add(getOrderProdFromInventory(order, currentInventory.get(choosen)));
+					currentInventory.get(choosen)
+					.setQuantity(currentInventory.get(choosen).getQuantity() - 1);
+				}
 			}
 		}
 		List<Order> res = new ArrayList<>();
@@ -55,7 +60,7 @@ public class ProductChooser {
 	}
 	
 	private int getRandomly() {
-		int position = rand.nextInt(totalInventory) + 1;
+		int position = rand.nextInt(poolSize) + 1;
 		int i;
 		for(i = 0; position > 0 && i < pool.size(); i++) {
 			position -= pool.get(i).getQuantity();
