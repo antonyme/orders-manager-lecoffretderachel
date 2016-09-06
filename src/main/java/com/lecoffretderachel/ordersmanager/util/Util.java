@@ -1,4 +1,4 @@
-package com.lecoffretderachel.ordersmanager;
+package com.lecoffretderachel.ordersmanager.util;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -16,5 +16,10 @@ public class Util {
 	
 	public static Set<String> StringToSet(String str) {
 		return new HashSet<>(Arrays.asList(str.split(",")));
+	}
+	
+	public static String addEscapeChar(String str) {
+		return str.replaceAll("'", "\\\\'")
+				.replaceAll("\"", "\\\\\"");
 	}
 }

@@ -26,8 +26,10 @@ public class OrderImportModel {
 	List<OrderModelBuilder> subOrderBuilderList = new ArrayList<>();
 	List<OrderModelBuilder> directOrderBuilderList = new ArrayList<>();
 	List<Order> subOrderList = new ArrayList<>();
-	List<String[]> refusedProduct = new ArrayList<>();
-	List<String[]> addedDirectProduct = new ArrayList<>();
+	List<String[]> directOrdersRefused = new ArrayList<>();
+	List<String[]> directOrdersToSend = new ArrayList<>();
+	List<String[]> subOrdersRefused = new ArrayList<>();
+	List<String[]> subOrdersToSend = new ArrayList<>();
 	
 	public OrderImportModel(ProductService productService, CustomerService customerService, OrderService orderService, InventoryService inventoryService) {
 		this.productService = productService;
@@ -134,11 +136,11 @@ public class OrderImportModel {
 			List<OrderProduct> toRemoveFromOrder = new ArrayList<>();
 			for(OrderProduct productInclude : order.getNewOrder().getOrderProductInclude()) {
 				if(!inventoryService.removeFromInventory(productInclude)) {
-					refusedProduct.add(
+					directOrdersRefused.add(
 							Util.orderProductToString(order.getNewOrder(), productInclude));
 				}
 				else {
-					addedDirectProduct.add(
+					directOrdersToSend.add(
 							Util.orderProductToString(order.getNewOrder(), productInclude));
 				}
 			}
@@ -147,13 +149,36 @@ public class OrderImportModel {
 		}
 	}
 	
+	public void writeDirectLogs() {
+		LogWriter.write("direct orders refused", directOrdersRefused);
+		LogWriter.write("direct orders to send", directOrdersToSend);
+	}
+	
 	public void suggestSubOrderProducts() {
 		ProductChooser chooser = new ProductChooser(subOrderBuilderList, inventoryService.list());
 		subOrderList = chooser.getResult();
 	}
 	
-	public void writeLogs() {
-		LogWriter.write("refused products", refusedProduct);
-		LogWriter.write("added direct", addedDirectProduct);
+	public void persistSubOrders() {
+		for(OrderModelBuilder order : subOrderBuilderList) {
+			List<OrderProduct> toRemoveFromOrder = new ArrayList<>();
+			for(OrderProduct productInclude : order.getNewOrder().getOrderProductInclude()) {
+				if(!inventoryService.removeFromInventory(productInclude)) {
+					subOrdersRefused.add(
+							Util.orderProductToString(order.getNewOrder(), productInclude));
+				}
+				else {
+					subOrdersToSend.add(
+							Util.orderProductToString(order.getNewOrder(), productInclude));
+				}
+			}
+			order.getNewOrder().getOrderProductInclude().removeAll(toRemoveFromOrder);
+			orderService.persist(order.getNewOrder());
+		}
+	}
+	
+	public void writeSubLogs() {
+		LogWriter.write("subscription orders refused", subOrdersRefused);
+		LogWriter.write("subscription orders to send", subOrdersToSend);
 	}
 }

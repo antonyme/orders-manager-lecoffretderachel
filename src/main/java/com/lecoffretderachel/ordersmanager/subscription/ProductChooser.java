@@ -51,11 +51,14 @@ public class ProductChooser {
 		pool.clear();
 		poolSize = 0;
 		for(Inventory inventory : currentInventory) {
-			if(inventory.getProductSize().equals(currentOrder.getProductInclude().get(0).getSize())) {
+			if(inventory.getProductSize().equals(currentOrder.getProductInclude().get(0).getSize())
+					&& !inventory.getProduct().getName().equals("Recu en cadeau")
+					&& !inventory.getProduct().getName().equals("offrir en cadeau")) {
 				pool.add(inventory);
 				poolSize += inventory.getQuantity();
 			}
 		}
+		//currentOrder.getNewOrder().getOrderOwner().getProductsExcluded()
 		
 	}
 	

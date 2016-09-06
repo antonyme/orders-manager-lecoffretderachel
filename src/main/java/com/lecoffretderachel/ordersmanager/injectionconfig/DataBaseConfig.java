@@ -22,6 +22,9 @@ import com.lecoffretderachel.ordersmanager.dao.ProductDAO;
 import com.lecoffretderachel.ordersmanager.dao.ProductDAOImpl;
 import com.lecoffretderachel.ordersmanager.dao.TagDAO;
 import com.lecoffretderachel.ordersmanager.dao.TagDAOImpl;
+import com.lecoffretderachel.ordersmanager.dao.UtilDAO;
+import com.lecoffretderachel.ordersmanager.dao.UtilDAOImpl;
+import com.lecoffretderachel.ordersmanager.logFile.Db2sql;
 import com.lecoffretderachel.ordersmanager.model.Customer;
 import com.lecoffretderachel.ordersmanager.model.Inventory;
 import com.lecoffretderachel.ordersmanager.model.Order;
@@ -38,6 +41,8 @@ import com.lecoffretderachel.ordersmanager.service.ProductService;
 import com.lecoffretderachel.ordersmanager.service.ProductServiceImpl;
 import com.lecoffretderachel.ordersmanager.service.TagService;
 import com.lecoffretderachel.ordersmanager.service.TagServiceImpl;
+import com.lecoffretderachel.ordersmanager.service.UtilService;
+import com.lecoffretderachel.ordersmanager.service.UtilServiceImpl;
 
 @Configuration
 @EnableTransactionManagement
@@ -91,6 +96,21 @@ public class DataBaseConfig {
 	@Bean
 	public TagDAO getTagDAO() {
 		return new TagDAOImpl(getSessionFactory());
+	}
+	
+	@Bean
+	public UtilService getUtilService() {
+		return new UtilServiceImpl(getUtilDAO());
+	}
+	
+	@Bean
+	public UtilDAO getUtilDAO() {
+		return new UtilDAOImpl(getSessionFactory());
+	}
+	
+	@Bean
+	public Db2sql getDb2sql() {
+		return new Db2sql(getUtilService());
 	}
 	
 	@Bean

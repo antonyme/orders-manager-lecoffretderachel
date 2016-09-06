@@ -38,7 +38,6 @@ public class InventoryView {
 		btnPane.add(btnAddEntry);
 		btnPane.add(btnDeleteEntry);
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		frame.add(tablePane, BorderLayout.CENTER);
 		frame.add(btnPane, BorderLayout.SOUTH);

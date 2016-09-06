@@ -22,10 +22,10 @@ import javax.swing.table.TableCellRenderer;
 public class OrderImportView {
 	JFrame frame = new JFrame();
 	JPanel container = new JPanel();
-	JButton btnNext;
+	JButton btnNext = new JButton("Next");
 	JPanel chooseFilePanel = new JPanel();
 	JTextField pathField;
-	JButton btnBrowse;
+	JButton btnBrowse = new JButton("Browse...");
 	JTable table = new JTable();
 	JScrollPane subOrdersPanel = new JScrollPane(table);
 	
@@ -59,6 +59,10 @@ public class OrderImportView {
 		frame.setVisible(true);
 	}
 	
+	public void hideGUI() {
+		frame.setVisible(false);
+	}
+	
 	public void addBtnNextListener(ActionListener listener) {
 		btnNext.addActionListener(listener);
 	}
@@ -68,7 +72,6 @@ public class OrderImportView {
 	}
 	
 	private void createGUI() {
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 450, 300);
 		container.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(container);
@@ -78,7 +81,6 @@ public class OrderImportView {
 		container.add(bottomPanel, BorderLayout.SOUTH);
 		bottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		btnNext = new JButton("Next");
 		bottomPanel.add(btnNext);
 		
 		createChooseFilePanel();
@@ -95,7 +97,6 @@ public class OrderImportView {
 		chooseFilePanel.add(pathField);
 		pathField.setColumns(10);
 		
-		btnBrowse = new JButton("Browse...");
 		chooseFilePanel.add(btnBrowse);
 	}
 	

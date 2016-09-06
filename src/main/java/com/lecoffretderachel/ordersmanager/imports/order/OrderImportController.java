@@ -2,7 +2,6 @@ package com.lecoffretderachel.ordersmanager.imports.order;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 
 import javax.swing.DefaultCellEditor;
@@ -37,13 +36,10 @@ public class OrderImportController {
 		JFileChooser chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV File", "csv");
 		chooser.setFileFilter(filter);
-		chooser.setCurrentDirectory(new File("C:"
+/*		chooser.setCurrentDirectory(new File("C:"
 				+ File.separator + "Users"
-				+ File.separator + "GUILLAUME"
-				+ File.separator + "Google Drive"
-				+ File.separator + "Rachel"
-				+ File.separator + "CSV import"
-				+ File.separator + "orders exports"));
+				+ File.separator + ""
+				+ File.separator + "orders exports"));*/
 		int returnValue = chooser.showOpenDialog(theView.getContainer());
 		if(returnValue == JFileChooser.APPROVE_OPTION) {
 			state = 1;
@@ -122,8 +118,7 @@ public class OrderImportController {
 					matchProducts();
 					matchClients();
 					theModel.persistDirectOrders();
-					theModel.suggestSubOrderProducts();
-					theModel.writeLogs();
+					theModel.writeDirectLogs();
 				}
 				catch(IllegalArgumentException ex) {
 					ex.printStackTrace();
@@ -131,6 +126,7 @@ public class OrderImportController {
 					break;
 				}
 				state = 2;
+				theModel.suggestSubOrderProducts();
 				theView.setBtnNextState(false);
 				theView.removeChooseFilePanel();
 				theView.addSubOrdersPanel(theModel.getSubOrderList(), theModel.getSubOrderMaxItemCount());
@@ -138,8 +134,12 @@ public class OrderImportController {
 						new DefaultCellEditor(
 								new JComboBox<>(theModel.getPossibleOrderProduct().toArray())));
 				theView.addSubOrdersProductRenderer(new SubOrdersProductRenderer());
+				theView.setBtnNextState(true);
 				break;
 			case 2:
+				theModel.persistSubOrders();
+				theModel.writeSubLogs();
+				theView.hideGUI();
 				break;
 			default:
 				break;
