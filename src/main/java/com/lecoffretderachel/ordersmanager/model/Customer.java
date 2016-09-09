@@ -151,7 +151,7 @@ public class Customer implements java.io.Serializable {
 	}
 
 	@OneToMany(mappedBy = "orderOwner")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	@Cascade({CascadeType.DELETE})
 	public List<Order> getOrders() {
 		return orders;

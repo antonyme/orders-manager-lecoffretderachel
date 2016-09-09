@@ -43,6 +43,7 @@ import com.lecoffretderachel.ordersmanager.service.TagService;
 import com.lecoffretderachel.ordersmanager.service.TagServiceImpl;
 import com.lecoffretderachel.ordersmanager.service.UtilService;
 import com.lecoffretderachel.ordersmanager.service.UtilServiceImpl;
+import com.lecoffretderachel.ordersmanager.util.Util;
 
 @Configuration
 @EnableTransactionManagement
@@ -115,11 +116,16 @@ public class DataBaseConfig {
 	
 	@Bean
 	public DataSource getDataSource() {
+		Properties properties = Util.loadProperties();
 	    BasicDataSource dataSource = new BasicDataSource();
 	    dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-	    dataSource.setUrl("jdbc:mysql://localhost:3306/order_db?serverTimezone=UTC&useSSL=false");
-	    dataSource.setUsername("root");
-	    dataSource.setPassword("root");
+	    dataSource.setUrl("jdbc:mysql://" + properties.getProperty("address") 
+	    			+ ":" + properties.getProperty("port")
+	    			+ "/" + properties.getProperty("dbName")
+	    			+ "?serverTimezone=UTC&useSSL=false"
+	    );
+	    dataSource.setUsername(properties.getProperty("username"));
+	    dataSource.setPassword(properties.getProperty("password"));
 	 
 	    return dataSource;
 	}
