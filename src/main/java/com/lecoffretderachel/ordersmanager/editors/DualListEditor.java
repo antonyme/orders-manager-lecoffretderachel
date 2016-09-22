@@ -2,7 +2,10 @@ package com.lecoffretderachel.ordersmanager.editors;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -72,7 +75,7 @@ public class DualListEditor extends AbstractCellEditor
 	                            boolean isSelected,
 	                            int row,
 	                            int column) {
-		currentList = (List) value;
+		currentList = new ArrayList((Set) value);
 		return button;
 	}
 }

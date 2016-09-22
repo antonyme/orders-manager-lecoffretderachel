@@ -20,7 +20,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	public List listAll() {
-		return sessionFactory.getCurrentSession().createQuery("from Customer").list();
+		return sessionFactory.getCurrentSession()
+				.createQuery("select c from Customer c "
+						+ "left join fetch c.tagsIncluded "
+						+ "left join fetch c.tagsExcluded "
+						+ "left join fetch c.productsIncluded "
+						+ "left join fetch c.productsExcluded").list();
 	}
 
 	public Customer findById(Integer id) {

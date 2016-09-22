@@ -1,8 +1,9 @@
 package com.lecoffretderachel.ordersmanager.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,11 +28,11 @@ public class Customer implements java.io.Serializable {
 	private String firstName;
 	private String lastName;
 	private String note;
-	private List<Tag> tagsIncluded = new ArrayList<Tag>();
-	private List<Tag> tagsExcluded = new ArrayList<Tag>();
-	private List<Product> productsIncluded = new ArrayList<Product>();
-	private List<Product> productsExcluded = new ArrayList<Product>();
-	private List<Order> orders = new ArrayList<Order>();
+	private Set<Tag> tagsIncluded = new HashSet<Tag>();
+	private Set<Tag> tagsExcluded = new HashSet<Tag>();
+	private Set<Product> productsIncluded = new HashSet<Product>();
+	private Set<Product> productsExcluded = new HashSet<Product>();
+	private Set<Order> orders = new HashSet<Order>();
 	
 	public Customer() {
 		this.email = "newEmail";
@@ -91,73 +92,73 @@ public class Customer implements java.io.Serializable {
 	}
 
 	@ManyToMany
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	@JoinTable(
 		name = "customer_tag_include",
 		joinColumns = @JoinColumn(name = "customer_id"),
 		inverseJoinColumns = @JoinColumn(name = "tag_id")
 	)
-	public List<Tag> getTagsIncluded() {
+	public Set<Tag> getTagsIncluded() {
 		return tagsIncluded;
 	}
 
-	public void setTagsIncluded(List<Tag> tagsIncluded) {
+	public void setTagsIncluded(Set<Tag> tagsIncluded) {
 		this.tagsIncluded = tagsIncluded;
 	}
 
 	@ManyToMany
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	@JoinTable(
 		name = "customer_tag_exclude",
 		joinColumns = @JoinColumn(name = "customer_id"),
 		inverseJoinColumns = @JoinColumn(name = "tag_id")
 	)
-	public List<Tag> getTagsExcluded() {
+	public Set<Tag> getTagsExcluded() {
 		return tagsExcluded;
 	}
 
-	public void setTagsExcluded(List<Tag> tagsExcluded) {
+	public void setTagsExcluded(Set<Tag> tagsExcluded) {
 		this.tagsExcluded = tagsExcluded;
 	}
 
 	@ManyToMany
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	@JoinTable(
 		name = "customer_product_include",
 		joinColumns = @JoinColumn(name = "customer_id"),
 		inverseJoinColumns = @JoinColumn(name = "product_id")
 	)
-	public List<Product> getProductsIncluded() {
+	public Set<Product> getProductsIncluded() {
 		return productsIncluded;
 	}
 
-	public void setProductsIncluded(List<Product> productsIncluded) {
+	public void setProductsIncluded(Set<Product> productsIncluded) {
 		this.productsIncluded = productsIncluded;
 	}
 
 	@ManyToMany
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	@JoinTable(
 		name = "customer_product_exclude",
 		joinColumns = @JoinColumn(name = "customer_id"),
 		inverseJoinColumns = @JoinColumn(name = "product_id")
 	)
-	public List<Product> getProductsExcluded() {
+	public Set<Product> getProductsExcluded() {
 		return productsExcluded;
 	}
 
-	public void setProductsExcluded(List<Product> productsExcluded) {
+	public void setProductsExcluded(Set<Product> productsExcluded) {
 		this.productsExcluded = productsExcluded;
 	}
 
 	@OneToMany(mappedBy = "orderOwner")
 	@LazyCollection(LazyCollectionOption.TRUE)
 	@Cascade({CascadeType.DELETE})
-	public List<Order> getOrders() {
+	public Set<Order> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(List<Order> orders) {
+	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
 	
@@ -203,16 +204,12 @@ public class Customer implements java.io.Serializable {
 		case 4:
 			return note;
 		case 5:
-			Collections.sort(tagsIncluded);
 			return tagsIncluded;
 		case 6:
-			Collections.sort(tagsExcluded);
 			return tagsExcluded;
 		case 7:
-			Collections.sort(productsIncluded);
 			return productsIncluded;
 		case 8:
-			Collections.sort(productsExcluded);
 			return productsExcluded;
 		default:
 			return null;
@@ -234,16 +231,16 @@ public class Customer implements java.io.Serializable {
 			note = (String) value;
 			break;
 		case 5:
-			tagsIncluded = (List<Tag>) value;
+			tagsIncluded = new HashSet<Tag>((Collection<Tag>) value);
 			break;
 		case 6:
-			tagsExcluded = (List<Tag>) value;
+			tagsExcluded = new HashSet((Collection<Tag>) value);
 			break;
 		case 7:
-			productsIncluded = (List<Product>) value;
+			productsIncluded = new HashSet((Collection<Product>) value);
 			break;
 		case 8:
-			productsExcluded = (List<Product>) value;
+			productsExcluded = new HashSet((Collection<Product>) value);
 			break;
 		default:
 			break;
